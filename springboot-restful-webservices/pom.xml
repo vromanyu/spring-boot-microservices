@@ -82,6 +82,19 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <image>
+                        <name>vromanyu/spring-boot-webservices:latest</name>
+                        <publish>true</publish>
+                    </image>
+                    <docker>
+                        <publishRegistry>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <username>${env.DOCKER_USERNAME}</username>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <password>${env.DOCKER_PASSWORD}</password>
+                        </publishRegistry>
+                    </docker>
+                    <imageBuilder>paketobuildpacks/builder-jammy-base</imageBuilder>
                 </configuration>
             </plugin>
         </plugins>

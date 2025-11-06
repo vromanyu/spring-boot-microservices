@@ -1,0 +1,30 @@
+name: springboot-restful-webservices
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  springboot-restful-webservices-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone
+        uses: actions/checkout@v5
+      - name: JDK Setup
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          architecture: x64
+      - name: Build/Test
+        id: build
+        run: mvn -B package --file ./springboot-restful-webservices/pom.xml
+      - name: Upload Artifact
+        if: success() && steps.build.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: ./springboot-restful-webservices/target/*.jar

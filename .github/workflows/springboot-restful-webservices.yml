@@ -1,11 +1,17 @@
-name: springboot-restful-webservices
+name: springboot-restful-webservices-ci
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - ".idea/**"
+      - "pom.xml"
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - ".idea/**"
+      - "pom.xml"
   workflow_dispatch:
 
 

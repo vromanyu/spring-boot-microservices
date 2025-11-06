@@ -50,5 +50,5 @@ jobs:
         if: success() && steps.build.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: app
+          name: app-${{matrix.java-version}}
           path: ./springboot-restful-webservices/target/*.jar

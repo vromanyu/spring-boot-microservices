@@ -17,6 +17,9 @@ on:
 
 jobs:
   springboot-restful-webservices-ci:
+    strategy:
+      matrix:
+        java-version: [21, 25]
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -37,12 +40,12 @@ jobs:
       - name: JDK Setup
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: ${{matrix.java-version}}
           distribution: 'temurin'
           architecture: x64
       - name: Build/Test
         id: build
-        run: mvn -B package --file ./springboot-restful-webservices/pom.xml
+        run: mvn -B package --file ./springboot-restful-webservices/pom.xml -Djava.version=${{matrix.java-version}}
       - name: Upload Artifact
         if: success() && steps.build.outcome == 'success'
         uses: actions/upload-artifact@v4

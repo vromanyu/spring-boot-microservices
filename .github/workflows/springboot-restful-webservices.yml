@@ -43,6 +43,7 @@ jobs:
           java-version: ${{matrix.java-version}}
           distribution: 'temurin'
           architecture: x64
+          cache: maven
       - name: Build/Test
         id: build
         run: mvn -B package --file ./springboot-restful-webservices/pom.xml -Djava.version=${{matrix.java-version}}

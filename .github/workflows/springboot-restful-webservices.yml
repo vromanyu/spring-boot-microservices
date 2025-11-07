@@ -36,8 +36,6 @@ jobs:
       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
       DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      SPRING_THREADS_VIRTUAL_ENABLED: true
-      SPRING_MAIN_KEEP-ALIVE: true
     steps:
       - name: Clone
         uses: actions/checkout@v5

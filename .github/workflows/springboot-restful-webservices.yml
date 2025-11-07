@@ -4,12 +4,12 @@ on:
     branches:
       - main
     paths:
-      - ./springboot-restful-webservices/**
+      - springboot-restful-webservices/**
   pull_request:
     branches:
       - main
     paths:
-      - ./springboot-restful-webservices/**
+      - springboot-restful-webservices/**
   workflow_dispatch:
 
 

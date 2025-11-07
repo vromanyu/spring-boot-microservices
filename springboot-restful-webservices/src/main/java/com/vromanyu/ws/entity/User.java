@@ -32,4 +32,10 @@ public class User {
 
     @UpdateTimestamp
     private OffsetDateTime lastModifiedDate;
+
+    public User(String firstname, String lastname, String email) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+    }
 }

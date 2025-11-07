@@ -13,10 +13,7 @@ if [ -z "${POSTGRES_USER}" ] || [ -z "${POSTGRES_PASSWORD}" ] \
   exit 1
 fi
 
-
-
 echo "Starting docker compose..."
-
 
 docker-compose pull
 docker-compose up --detach --force-recreate --remove-orphans

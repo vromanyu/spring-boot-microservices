@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -e
 
 printf "The script depends on the following environment variables\n\
 POSTGRES_USER\n\

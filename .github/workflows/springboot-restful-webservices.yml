@@ -3,15 +3,13 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - ".idea/**"
-      - "pom.xml"
+    paths:
+      - ./springboot-restful-webservices/**
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - ".idea/**"
-      - "pom.xml"
+    paths:
+      - ./springboot-restful-webservices/**
   workflow_dispatch:
 
 

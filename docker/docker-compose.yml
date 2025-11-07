@@ -1,0 +1,40 @@
+name: spring-boot-microservices
+
+services:
+  springboot-restful-webservices:
+    image: vromanyu/spring-boot-webservices
+    container_name: springboot-restful-webservices
+    hostname: springboot-restful-webservices
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    networks:
+      springboot-restful-webservices-network:
+
+  postgresql:
+    image: postgres:latest
+    container_name: postgres
+    hostname: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER}
+    healthcheck:
+      test: pg_isready
+      interval: 1s
+      start_period: 2s
+      retries: 3
+    networks:
+      springboot-restful-webservices-network:
+
+networks:
+  springboot-restful-webservices-network:
+    driver: bridge

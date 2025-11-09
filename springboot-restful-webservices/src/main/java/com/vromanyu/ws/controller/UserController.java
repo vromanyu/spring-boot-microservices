@@ -4,9 +4,7 @@ import com.vromanyu.ws.entity.User;
 import com.vromanyu.ws.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
@@ -22,6 +20,12 @@ public class UserController {
         return ResponseEntity.
                 created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri())
                 .body(savedUser);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findUserById(@PathVariable int id){
+        User foundUser = userService.findUserById(id);
+        return ResponseEntity.ok(foundUser);
     }
 
 }

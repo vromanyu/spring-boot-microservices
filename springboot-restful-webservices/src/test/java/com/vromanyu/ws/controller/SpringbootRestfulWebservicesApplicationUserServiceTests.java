@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -43,6 +44,23 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
                 .content(objectMapper.writeValueAsString(user)));
 
         result.andExpect(status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstname").value("Viktor"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastname").value("Romanyuk"));
+    }
+
+    @Test
+    public void shouldFindUser() throws Exception {
+
+        User user = new User("Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
+        user.setId(1);
+
+        Mockito.when(userService.findUserById(Mockito.anyInt())).thenReturn(user);
+
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/users/1")
+                .contentType("application/json"));
+
+        result.andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstname").value("Viktor"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastname").value("Romanyuk"));

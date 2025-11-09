@@ -15,4 +15,9 @@ public final class UserServiceImpl implements UserService {
     public User createUser(User user) {
         return userRepository.save(user);
     }
+
+    @Override
+    public User findUserById(int id) {
+        return userRepository.findById(id).orElseThrow();
+    }
 }

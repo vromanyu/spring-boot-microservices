@@ -32,4 +32,15 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ErrorDetails> handleException(Exception e, HttpServletRequest req) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                OffsetDateTime.now(),
+                e.getMessage(),
+                req.getRequestURI(),
+                "GENERIC_ERROR"
+        );
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

@@ -110,6 +110,7 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
 
     @Test
     public void shouldReturnErrorDetails() throws Exception {
+
         Mockito.when(userService.findUserById(Mockito.anyInt())).thenThrow(new ResourceNotFound("User", "id", 1));
 
         ResultActions result = mockMvc.perform(get("/api/users/{id}", 1)
@@ -138,6 +139,22 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
                 .andExpect(jsonPath("$.message").exists())
                 .andExpect(jsonPath("$.path").exists())
                 .andExpect(jsonPath("$.errorCode").exists());
+    }
+
+    @Test
+    public void shouldThrowGenericException() throws Exception {
+
+        Mockito.doThrow(Exception.class).when(userService);
+
+        ResultActions result = mockMvc.perform(get("/api/users")
+                .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.timestamp").exists())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.path").exists())
+                .andExpect(jsonPath("$.errorCode").exists());
+
     }
 
 

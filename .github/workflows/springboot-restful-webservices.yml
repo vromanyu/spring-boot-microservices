@@ -1,20 +1,20 @@
-name: springboot-restful-webservices-ci
+name: users-ms-workflow
 on:
   push:
     branches:
       - main
     paths:
-      - springboot-restful-webservices/**
+      - users-ms/**
   pull_request:
     branches:
       - main
     paths:
-      - springboot-restful-webservices/**
+      - users-ms/**
   workflow_dispatch:
 
 
 jobs:
-  springboot-restful-webservices-ci:
+  users-ms-ci:
     strategy:
       matrix:
         java-version: [21, 25]
@@ -46,10 +46,10 @@ jobs:
           cache: 'maven'
       - name: Build/Test
         id: build
-        run: mvn -B package --file ./springboot-restful-webservices/pom.xml -Djava.version=${{matrix.java-version}}
+        run: mvn -B package --file ./users-ms/pom.xml -Djava.version=${{matrix.java-version}}
       - name: Upload Artifact
         if: success() && steps.build.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: app-${{matrix.java-version}}
-          path: ./springboot-restful-webservices/target/*.jar
+          path: ./users-ms/target/*.jar

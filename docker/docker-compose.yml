@@ -1,10 +1,10 @@
 name: spring-boot-microservices
 
 services:
-  springboot-restful-webservices:
-    image: vromanyu/spring-boot-webservices
-    container_name: springboot-restful-webservices
-    hostname: springboot-restful-webservices
+  users-ms:
+    image: vromanyu/users-ms
+    container_name: users-ms
+    hostname: users-ms
     depends_on:
       postgresql:
         condition: service_healthy
@@ -16,7 +16,7 @@ services:
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     networks:
-      springboot-restful-webservices-network:
+      microservices-network:
 
   postgresql:
     image: postgres:latest
@@ -33,8 +33,8 @@ services:
       start_period: 2s
       retries: 3
     networks:
-      springboot-restful-webservices-network:
+      microservices-network:
 
 networks:
-  springboot-restful-webservices-network:
+  microservices-network:
     driver: bridge

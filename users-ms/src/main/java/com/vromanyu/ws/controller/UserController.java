@@ -1,5 +1,6 @@
 package com.vromanyu.ws.controller;
 
+import com.vromanyu.ws.dto.UserDto;
 import com.vromanyu.ws.entity.User;
 import com.vromanyu.ws.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,10 +40,10 @@ public class UserController {
     )
     @PostMapping(value = "/users", consumes =  MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> createUser(User user){
-        User savedUser = userService.createUser(user);
+    public ResponseEntity<UserDto> createUser(UserDto userDto){
+        UserDto savedUser = userService.createUser(userDto);
         return ResponseEntity.
-                created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri())
+                created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userDto.id()).toUri())
                 .body(savedUser);
     }
 
@@ -57,8 +58,8 @@ public class UserController {
 
     )
     @GetMapping(value = "/users/{id}", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> findUserById(@PathVariable int id){
-        User foundUser = userService.findUserById(id);
+    public ResponseEntity<UserDto> findUserById(@PathVariable int id){
+        UserDto foundUser = userService.findUserById(id);
         return ResponseEntity.ok(foundUser);
     }
 
@@ -68,7 +69,7 @@ public class UserController {
             operationId = "findAllUsers"
     )
     @GetMapping(value = "/users", produces =   MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> findAllUsers(){
+    public ResponseEntity<List<UserDto>> findAllUsers(){
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
@@ -90,9 +91,9 @@ public class UserController {
 
     )
     @PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@RequestBody User user){
-        User savedUser = userService.updateUser(user);
-        return ResponseEntity.ok(savedUser);
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
+        UserDto updatedUser = userService.updateUser(userDto);
+        return ResponseEntity.ok(updatedUser);
     }
 
 

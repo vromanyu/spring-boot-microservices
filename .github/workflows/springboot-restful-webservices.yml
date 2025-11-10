@@ -12,7 +12,6 @@ on:
       - users-ms/**
   workflow_dispatch:
 
-
 jobs:
   users-ms-ci:
     strategy:

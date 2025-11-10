@@ -2,6 +2,7 @@ package com.vromanyu.ws.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vromanyu.ws.dto.UserDto;
+import com.vromanyu.ws.exception.ResourceNotFound;
 import com.vromanyu.ws.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -105,6 +106,38 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
         ResultActions result = mockMvc.perform(delete("/api/users/{id}", 1));
 
         result.andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldReturnErrorDetails() throws Exception {
+        Mockito.when(userService.findUserById(Mockito.anyInt())).thenThrow(new ResourceNotFound("User", "id", 1));
+
+        ResultActions result = mockMvc.perform(get("/api/users/{id}", 1)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.timestamp").exists())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.path").exists())
+                .andExpect(jsonPath("$.errorCode").exists());
+    }
+
+    @Test
+    public void shouldThrowWhenUpdateWithoutId() throws Exception {
+
+        Mockito.when(userService.updateUser(Mockito.any(UserDto.class))).thenThrow(new IllegalArgumentException("id can't be null"));
+
+        UserDto user = new UserDto(null,"Viktor", "Romanyuk", "viktor@gmail.com");
+
+        ResultActions result = mockMvc.perform(put("/api/users").contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user)));
+
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.timestamp").exists())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.path").exists())
+                .andExpect(jsonPath("$.errorCode").exists());
     }
 
 

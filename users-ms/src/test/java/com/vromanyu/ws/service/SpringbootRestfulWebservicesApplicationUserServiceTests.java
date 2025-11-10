@@ -1,6 +1,7 @@
 package com.vromanyu.ws.service;
 
 import com.vromanyu.ws.dto.UserDto;
+import com.vromanyu.ws.exception.ResourceNotFound;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -49,7 +49,7 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
 
         userService.createUser(userDto);
 
-        Assertions.assertThrows(NoSuchElementException.class, () -> userService.findUserById(0));
+        Assertions.assertThrows(ResourceNotFound.class, () -> userService.findUserById(0));
 
     }
 

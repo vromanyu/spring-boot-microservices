@@ -1,6 +1,7 @@
 package com.vromanyu.ws.service;
 
 import com.vromanyu.ws.dto.UserDto;
+import com.vromanyu.ws.exception.ResourceNotFound;
 import com.vromanyu.ws.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findUserById(int id) {
-        return UserDto.UserMapper.toUserDto(userRepository.findById(id).orElseThrow());
+        return UserDto.UserMapper.toUserDto(userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("User", "id", id)));
     }
 
     @Override
@@ -33,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto) {
+        if (userDto.id() == null) {
+            throw new IllegalArgumentException("id can't be null");
+        }
         UserDto existingUser = findUserById(userDto.id());
         UserDto updatedUser = new UserDto(existingUser.id(), userDto.firstName(), userDto.lastName(), userDto.email());
         return UserDto.UserMapper.toUserDto(userRepository.save(UserDto.UserMapper.toUser(updatedUser)));

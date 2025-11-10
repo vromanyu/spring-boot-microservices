@@ -83,5 +83,24 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
                 .andExpect(jsonPath("$.length()").value(2));
     }
 
+    @Test
+    public void shouldUpdateUser() throws Exception {
+
+        User user = new User("Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
+        user.setId(1);
+
+        Mockito.when(userService.updateUser(Mockito.any(User.class))).thenReturn(user);
+
+        ResultActions result = mockMvc.perform(put("/api/users")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user)));
+
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.firstname").value("Viktor"))
+                .andExpect(jsonPath("$.lastname").value("Romanyuk"));
+    }
+
 
 }

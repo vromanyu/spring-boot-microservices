@@ -3,6 +3,7 @@ package com.vromanyu.ws.controller;
 import com.vromanyu.ws.entity.User;
 import com.vromanyu.ws.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -33,6 +34,12 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> findAllUsers(){
         return ResponseEntity.ok(userService.findAllUsers());
+    }
+
+    @PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        User savedUser = userService.updateUser(user);
+        return ResponseEntity.ok(savedUser);
     }
 
 }

@@ -9,4 +9,5 @@ public interface UserService {
     User createUser(User user);
     User findUserById(int id);
     List<User> findAllUsers();
+    User updateUser(User user);
 }

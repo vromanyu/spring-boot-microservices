@@ -85,4 +85,18 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
         Assertions.assertEquals("Romanyak", updatedUser.getLastname());
         Assertions.assertEquals(1, allSavedUsers.size());
     }
+
+    @Test
+    @DirtiesContext
+    public void shouldDeleteUser(){
+        User user = new User("Viktor", "Romanyuk", "vik@gmail.com");
+        User savedUser = userService.createUser(user);
+
+        userService.deleteUser(savedUser.getId());
+
+        List<User> savedUsers = userService.findAllUsers();
+
+        Assertions.assertNotNull(savedUsers);
+        Assertions.assertTrue(savedUsers.isEmpty());
+    }
 }

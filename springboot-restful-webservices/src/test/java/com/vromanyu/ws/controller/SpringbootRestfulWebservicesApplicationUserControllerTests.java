@@ -101,5 +101,15 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
                 .andExpect(jsonPath("$.lastname").value("Romanyuk"));
     }
 
+    @Test
+    public void shouldDeleteUser() throws Exception {
+
+        Mockito.doNothing().when(userService).deleteUser(Mockito.anyInt());
+
+        ResultActions result = mockMvc.perform(delete("/api/users/{id}", 1));
+
+        result.andExpect(status().isNoContent());
+    }
+
 
 }

@@ -4,10 +4,11 @@ import com.vromanyu.ws.entity.User;
 import com.vromanyu.ws.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public final class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -19,5 +20,10 @@ public final class UserServiceImpl implements UserService {
     @Override
     public User findUserById(int id) {
         return userRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 }

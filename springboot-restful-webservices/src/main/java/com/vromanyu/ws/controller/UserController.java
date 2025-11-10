@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -26,6 +28,11 @@ public class UserController {
     public ResponseEntity<User> findUserById(@PathVariable int id){
         User foundUser = userService.findUserById(id);
         return ResponseEntity.ok(foundUser);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> findAllUsers(){
+        return ResponseEntity.ok(userService.findAllUsers());
     }
 
 }

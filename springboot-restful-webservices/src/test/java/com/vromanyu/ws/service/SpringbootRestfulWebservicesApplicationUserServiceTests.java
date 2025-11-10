@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @SpringBootTest
@@ -46,5 +47,21 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
 
         Assertions.assertThrows(NoSuchElementException.class, () -> userService.findUserById(0));
 
+    }
+
+    @Test
+    public void shouldReturnAllUsers(){
+        List<User> users = List.of(
+                new User("Viktor", "Romanyuk", "viktorcd2.r@gmail.com"),
+                new User("Viktor", "Romanyuk", "viaask@gmail.com")
+        );
+
+        users.forEach(userService::createUser);
+
+        List<User> allSavedUsers = userService.findAllUsers();
+
+        Assertions.assertNotNull(allSavedUsers);
+        Assertions.assertFalse(allSavedUsers.isEmpty());
+        Assertions.assertEquals(users.size(), allSavedUsers.size());
     }
 }

@@ -66,5 +66,20 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastname").value("Romanyuk"));
     }
 
+    @Test
+    public void shouldReturnAllUsers() throws Exception {
+
+        Mockito.when(userService.findAllUsers()).thenReturn(List.of(
+                new User("Viktor", "Romanyuk", "vik@gmail.com"),
+                new User("Viktor", "Romanyuk", "vikt@gmail.com")
+        ));
+
+        ResultActions result = mockMvc.perform(get("/api/users").accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.length()").value(2));
+    }
+
 
 }

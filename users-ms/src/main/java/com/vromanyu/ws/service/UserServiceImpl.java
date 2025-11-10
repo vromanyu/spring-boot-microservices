@@ -1,7 +1,6 @@
 package com.vromanyu.ws.service;
 
 import com.vromanyu.ws.dto.UserDto;
-import com.vromanyu.ws.mapper.UserMapper;
 import com.vromanyu.ws.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,22 +18,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        return UserMapper.toUserDto(userRepository.save(UserMapper.toUser(userDto)));
+        return UserDto.UserMapper.toUserDto(userRepository.save(UserDto.UserMapper.toUser(userDto)));
     }
 
     @Override
     public UserDto findUserById(int id) {
-        return UserMapper.toUserDto(userRepository.findById(id).orElseThrow());
+        return UserDto.UserMapper.toUserDto(userRepository.findById(id).orElseThrow());
     }
 
     @Override
     public List<UserDto> findAllUsers() {
-        return userRepository.findAll().stream().map(UserMapper::toUserDto).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(UserDto.UserMapper::toUserDto).collect(Collectors.toList());
     }
 
     @Override
     public UserDto updateUser(UserDto userDto) {
-        return UserMapper.toUserDto(userRepository.save(UserMapper.toUser(userDto)));
+        return UserDto.UserMapper.toUserDto(userRepository.save(UserDto.UserMapper.toUser(userDto)));
     }
 
     @Override

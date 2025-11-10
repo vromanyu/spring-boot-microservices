@@ -17,7 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/users")
+    @PostMapping(value = "/users", consumes =  MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createUser(User user){
         User savedUser = userService.createUser(user);
         return ResponseEntity.
@@ -25,13 +25,13 @@ public class UserController {
                 .body(savedUser);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping(value = "/users/{id}", produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> findUserById(@PathVariable int id){
         User foundUser = userService.findUserById(id);
         return ResponseEntity.ok(foundUser);
     }
 
-    @GetMapping("/users")
+    @GetMapping(value = "/users", produces =   MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> findAllUsers(){
         return ResponseEntity.ok(userService.findAllUsers());
     }

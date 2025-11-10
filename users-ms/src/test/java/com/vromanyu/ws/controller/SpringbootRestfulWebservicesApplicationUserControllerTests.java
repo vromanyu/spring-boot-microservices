@@ -157,5 +157,21 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
 
     }
 
+    @Test
+    public void shouldNotPassValidations() throws Exception {
+
+        ResultActions result = mockMvc.perform(post("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(
+                        new UserDto(null, "v", "d", "dada134")
+                )));
+
+                result.andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.timestamp").exists())
+                        .andExpect(jsonPath("$.message").exists())
+                        .andExpect(jsonPath("$.path").exists())
+                        .andExpect(jsonPath("$.errorCode").exists());
+    }
+
 
 }

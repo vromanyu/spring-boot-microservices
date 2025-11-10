@@ -1,6 +1,6 @@
 package com.vromanyu.ws.service;
 
-import com.vromanyu.ws.entity.User;
+import com.vromanyu.ws.dto.UserDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,33 +21,33 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
     @Test
     @DirtiesContext
     public void shouldSaveUser(){
-        User user = new User("Viktor", "Romanyuk", "viktor@gmail.com");
+        UserDto userDto = new UserDto(null, "Viktor", "Romanyuk", "viktor@gmail.com");
 
-        User savedUser = userService.createUser(user);
+        UserDto savedUser = userService.createUser(userDto);
 
         Assertions.assertNotNull(savedUser);
-        Assertions.assertNotNull(savedUser.getId());
+        Assertions.assertNotNull(savedUser.id());
     }
 
     @Test
     @DirtiesContext
     public void shouldFindUserById(){
-        User user = new User("Viktor", "Romanyuk", "viktors@gmail.com");
+        UserDto userDto = new UserDto(null, "Viktor", "Romanyuk", "viktors@gmail.com");
 
-        User savedUser = userService.createUser(user);
+        UserDto savedUser = userService.createUser(userDto);
 
-        User foundUser = userService.findUserById(savedUser.getId());
+        UserDto foundUser = userService.findUserById(savedUser.id());
 
         Assertions.assertNotNull(foundUser);
-        Assertions.assertNotNull(foundUser.getId());
+        Assertions.assertNotNull(foundUser.id());
     }
 
     @Test
     @DirtiesContext
     public void shouldThrowWhenUserNotFound(){
-        User user = new User("Viktor", "Romanyuk", "viktorea@gmail.com");
+        UserDto userDto = new UserDto(null, "Viktor", "Romanyuk", "viktorea@gmail.com");
 
-        userService.createUser(user);
+        userService.createUser(userDto);
 
         Assertions.assertThrows(NoSuchElementException.class, () -> userService.findUserById(0));
 
@@ -56,14 +56,14 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
     @Test
     @DirtiesContext
     public void shouldReturnAllUsers(){
-        List<User> users = List.of(
-                new User("Viktor", "Romanyuk", "viktorcd2.r@gmail.com"),
-                new User("Viktor", "Romanyuk", "viaask@gmail.com")
+        List<UserDto> users = List.of(
+                new UserDto(null, "Viktor", "Romanyuk", "viktorcd2.r@gmail.com"),
+                new UserDto(null, "Viktor", "Romanyuk", "viaask@gmail.com")
         );
 
         users.forEach(userService::createUser);
 
-        List<User> allSavedUsers = userService.findAllUsers();
+        List<UserDto> allSavedUsers = userService.findAllUsers();
 
         Assertions.assertNotNull(allSavedUsers);
         Assertions.assertFalse(allSavedUsers.isEmpty());
@@ -73,28 +73,27 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
     @Test
     @DirtiesContext
     public void shouldUpdateUser(){
-        User user = new User("Viktor", "Romanyuk", "viktoraa@gmail.com");
-        User savedUser = userService.createUser(user);
-        savedUser.setFirstname("Antonio");
-        savedUser.setLastname("Romanyak");
-        User updatedUser = userService.updateUser(savedUser);
-        List<User> allSavedUsers = userService.findAllUsers();
+        UserDto userDto = new UserDto(null, "Viktor", "Romanyuk", "viktoraa@gmail.com");
+        UserDto savedUser = userService.createUser(userDto);
+        UserDto updateUser = new UserDto(savedUser.id(), "Antonio","Romanayk","viktoraa@gmail.com");
+        updateUser = userService.updateUser(updateUser);
+        List<UserDto> allSavedUsers = userService.findAllUsers();
 
-        Assertions.assertNotNull(updatedUser.getId());
-        Assertions.assertEquals("Antonio", updatedUser.getFirstname());
-        Assertions.assertEquals("Romanyak", updatedUser.getLastname());
+        Assertions.assertNotNull(updateUser.id());
+        Assertions.assertEquals("Antonio", updateUser.firstName());
+        Assertions.assertEquals("Romanayk", updateUser.lastName());
         Assertions.assertEquals(1, allSavedUsers.size());
     }
 
     @Test
     @DirtiesContext
     public void shouldDeleteUser(){
-        User user = new User("Viktor", "Romanyuk", "vik@gmail.com");
-        User savedUser = userService.createUser(user);
+        UserDto userDto = new UserDto(null, "Viktor", "Romanyuk", "vik@gmail.com");
+        UserDto savedUser = userService.createUser(userDto);
 
-        userService.deleteUser(savedUser.getId());
+        userService.deleteUser(savedUser.id());
 
-        List<User> savedUsers = userService.findAllUsers();
+        List<UserDto> savedUsers = userService.findAllUsers();
 
         Assertions.assertNotNull(savedUsers);
         Assertions.assertTrue(savedUsers.isEmpty());

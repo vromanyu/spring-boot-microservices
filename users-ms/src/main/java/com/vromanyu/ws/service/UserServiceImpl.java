@@ -1,12 +1,14 @@
 package com.vromanyu.ws.service;
 
-import com.vromanyu.ws.entity.User;
+import com.vromanyu.ws.dto.UserDto;
+import com.vromanyu.ws.mapper.UserMapper;
 import com.vromanyu.ws.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -16,23 +18,23 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDto createUser(UserDto userDto) {
+        return UserMapper.toUserDto(userRepository.save(UserMapper.toUser(userDto)));
     }
 
     @Override
-    public User findUserById(int id) {
-        return userRepository.findById(id).orElseThrow();
+    public UserDto findUserById(int id) {
+        return UserMapper.toUserDto(userRepository.findById(id).orElseThrow());
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> findAllUsers() {
+        return userRepository.findAll().stream().map(UserMapper::toUserDto).collect(Collectors.toList());
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserDto updateUser(UserDto userDto) {
+        return UserMapper.toUserDto(userRepository.save(UserMapper.toUser(userDto)));
     }
 
     @Override

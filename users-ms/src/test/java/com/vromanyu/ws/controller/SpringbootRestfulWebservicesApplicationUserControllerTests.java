@@ -1,7 +1,7 @@
 package com.vromanyu.ws.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vromanyu.ws.entity.User;
+import com.vromanyu.ws.dto.UserDto;
 import com.vromanyu.ws.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -34,16 +34,14 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
     @Test
     public void shouldCreateUser() throws Exception {
 
-        User user = new User("Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
-        User savedUser = new User("Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
-        savedUser.setId(1);
+        UserDto savedUser = new UserDto(1,"Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
 
-        Mockito.when(userService.createUser(Mockito.any(User.class))).thenReturn(savedUser);
+        Mockito.when(userService.createUser(Mockito.any(UserDto.class))).thenReturn(savedUser);
 
         ResultActions result = mockMvc.perform(post("/api/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user)));
+                .content(objectMapper.writeValueAsString(savedUser)));
 
         result.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
@@ -54,10 +52,9 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
     @Test
     public void shouldFindUser() throws Exception {
 
-        User user = new User("Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
-        user.setId(1);
+        UserDto userDto = new UserDto(1, "Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
 
-        Mockito.when(userService.findUserById(Mockito.anyInt())).thenReturn(user);
+        Mockito.when(userService.findUserById(Mockito.anyInt())).thenReturn(userDto);
 
         ResultActions result = mockMvc.perform(get("/api/users/1").accept(MediaType.APPLICATION_JSON));
 
@@ -71,8 +68,8 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
     public void shouldReturnAllUsers() throws Exception {
 
         Mockito.when(userService.findAllUsers()).thenReturn(List.of(
-                new User("Viktor", "Romanyuk", "vik@gmail.com"),
-                new User("Viktor", "Romanyuk", "vikt@gmail.com")
+                new UserDto(1, "Viktor", "Romanyuk", "vik@gmail.com"),
+                new UserDto(2, "Viktor", "Romanyuk", "vikt@gmail.com")
         ));
 
         ResultActions result = mockMvc.perform(get("/api/users").accept(MediaType.APPLICATION_JSON));
@@ -85,15 +82,14 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
     @Test
     public void shouldUpdateUser() throws Exception {
 
-        User user = new User("Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
-        user.setId(1);
+        UserDto userDto = new UserDto(1, "Viktor", "Romanyuk", "viktor.rmn9@gmail.com");
 
-        Mockito.when(userService.updateUser(Mockito.any(User.class))).thenReturn(user);
+        Mockito.when(userService.updateUser(Mockito.any(UserDto.class))).thenReturn(userDto);
 
         ResultActions result = mockMvc.perform(put("/api/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user)));
+                .content(objectMapper.writeValueAsString(userDto)));
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))

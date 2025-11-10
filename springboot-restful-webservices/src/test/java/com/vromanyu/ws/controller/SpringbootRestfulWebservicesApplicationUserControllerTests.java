@@ -6,7 +6,6 @@ import com.vromanyu.ws.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -21,8 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = UserController.class)
-@AutoConfigureTestDatabase
-class SpringbootRestfulWebservicesApplicationUserServiceTests {
+class SpringbootRestfulWebservicesApplicationUserControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,7 +41,8 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
         Mockito.when(userService.createUser(Mockito.any(User.class))).thenReturn(savedUser);
 
         ResultActions result = mockMvc.perform(post("/api/users")
-                .contentType("application/json")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)));
 
         result.andExpect(status().isCreated())

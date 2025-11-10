@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,6 +19,7 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
     private UserService userService;
 
     @Test
+    @DirtiesContext
     public void shouldSaveUser(){
         User user = new User("Viktor", "Romanyuk", "viktor@gmail.com");
 
@@ -28,6 +30,7 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
     }
 
     @Test
+    @DirtiesContext
     public void shouldFindUserById(){
         User user = new User("Viktor", "Romanyuk", "viktors@gmail.com");
 
@@ -40,6 +43,7 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
     }
 
     @Test
+    @DirtiesContext
     public void shouldThrowWhenUserNotFound(){
         User user = new User("Viktor", "Romanyuk", "viktorea@gmail.com");
 
@@ -50,6 +54,7 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
     }
 
     @Test
+    @DirtiesContext
     public void shouldReturnAllUsers(){
         List<User> users = List.of(
                 new User("Viktor", "Romanyuk", "viktorcd2.r@gmail.com"),

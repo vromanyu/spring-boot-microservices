@@ -11,12 +11,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/")
+    @PostMapping("/users")
     public ResponseEntity<User> createUser(User user){
         User savedUser = userService.createUser(user);
         return ResponseEntity.
@@ -24,7 +24,7 @@ public class UserController {
                 .body(savedUser);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<User> findUserById(@PathVariable int id){
         User foundUser = userService.findUserById(id);
         return ResponseEntity.ok(foundUser);

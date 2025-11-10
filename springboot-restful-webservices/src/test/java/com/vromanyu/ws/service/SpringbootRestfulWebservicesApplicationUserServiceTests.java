@@ -29,7 +29,7 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
 
     @Test
     public void shouldFindUserById(){
-        User user = new User("Viktor", "Romanyuk", "viktor@gmail.com");
+        User user = new User("Viktor", "Romanyuk", "viktors@gmail.com");
 
         User savedUser = userService.createUser(user);
 
@@ -41,7 +41,7 @@ class SpringbootRestfulWebservicesApplicationUserServiceTests {
 
     @Test
     public void shouldThrowWhenUserNotFound(){
-        User user = new User("Viktor", "Romanyuk", "viktor@gmail.com");
+        User user = new User("Viktor", "Romanyuk", "viktorea@gmail.com");
 
         userService.createUser(user);
 

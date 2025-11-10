@@ -100,7 +100,7 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <name>vromanyu/${name}:latest</name>
+                        <name>vromanyu/${project.name}:latest</name>
                         <publish>true</publish>
                     </image>
                     <docker>

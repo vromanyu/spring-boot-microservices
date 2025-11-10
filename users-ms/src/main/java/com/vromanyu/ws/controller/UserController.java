@@ -2,11 +2,13 @@ package com.vromanyu.ws.controller;
 
 import com.vromanyu.ws.dto.UserDto;
 import com.vromanyu.ws.entity.User;
+import com.vromanyu.ws.service.UserRequestLogServiceImpl;
 import com.vromanyu.ws.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRequestLogServiceImpl userRequestLogService;
 
     @Operation(
             tags = {"users"},
@@ -41,13 +44,13 @@ public class UserController {
     )
     @PostMapping(value = "/users", consumes =  MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto, HttpServletRequest request) {
+        userRequestLogService.logRequest(request);
         UserDto savedUser = userService.createUser(userDto);
         return ResponseEntity.
-                created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userDto.id()).toUri())
+                created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.id()).toUri())
                 .body(savedUser);
     }
-
 
     @Operation(
             tags = {"users"},
@@ -59,7 +62,8 @@ public class UserController {
 
     )
     @GetMapping(value = "/users/{id}", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> findUserById(@PathVariable int id){
+    public ResponseEntity<UserDto> findUserById(@PathVariable int id, HttpServletRequest request) {
+        userRequestLogService.logRequest(request);
         UserDto foundUser = userService.findUserById(id);
         return ResponseEntity.ok(foundUser);
     }
@@ -70,11 +74,10 @@ public class UserController {
             operationId = "findAllUsers"
     )
     @GetMapping(value = "/users", produces =   MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UserDto>> findAllUsers(){
+    public ResponseEntity<List<UserDto>> findAllUsers(HttpServletRequest request){
+        userRequestLogService.logRequest(request);
         return ResponseEntity.ok(userService.findAllUsers());
     }
-
-
 
     @Operation(
             tags = {"users"},
@@ -92,11 +95,11 @@ public class UserController {
 
     )
     @PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, HttpServletRequest request) {
+        userRequestLogService.logRequest(request);
         UserDto updatedUser = userService.updateUser(userDto);
         return ResponseEntity.ok(updatedUser);
     }
-
 
     @Operation(
             tags = {"users"},
@@ -108,7 +111,8 @@ public class UserController {
 
     )
     @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable int id){
+    public ResponseEntity<Void> deleteUser(@PathVariable int id, HttpServletRequest request) {
+        userRequestLogService.logRequest(request);
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }

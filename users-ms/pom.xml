@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vromanyu</groupId>
-    <artifactId>springboot-restful-webservices</artifactId>
+    <artifactId>users-ms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot-restful-webservices</name>
-    <description>springboot-restful-webservices</description>
+    <name>users-ms</name>
+    <description>Users microservice</description>
     <url/>
     <licenses>
         <license/>
@@ -100,7 +100,7 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <name>vromanyu/spring-boot-webservices:latest</name>
+                        <name>vromanyu/${project.name}:latest</name>
                         <publish>true</publish>
                     </image>
                     <docker>

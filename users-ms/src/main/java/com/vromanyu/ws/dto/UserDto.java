@@ -10,17 +10,17 @@ public record UserDto(
         Integer id,
 
         @JsonProperty("firstname")
-        @NotBlank
-        @Length(min = 4, max = 255)
+        @NotBlank(message = "firstname can't be blank")
+        @Length(min = 4, max = 255, message = "firstname must be between 4 and 255 characters")
         String firstName,
 
         @JsonProperty("lastname")
-        @NotBlank
-        @Length(min = 4, max = 255)
+        @NotBlank(message = "lastname can't be blank")
+        @Length(min = 4, max = 255, message = "lastname must be between 4 and 255 characters")
         String lastName,
 
-        @NotBlank
-        @Email
+        @NotBlank(message = "email can't be blank")
+        @Email(message = "not a valid email")
         String email) {
 
     public static final class UserMapper {

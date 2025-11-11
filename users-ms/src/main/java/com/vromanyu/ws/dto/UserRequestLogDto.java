@@ -11,5 +11,15 @@ public record UserRequestLogDto(
         public static UserRequestLog toUserRequestLog(UserRequestLogDto userRequestLogDto) {
             return new UserRequestLog(userRequestLogDto.server, userRequestLogDto.requestUrl, userRequestLogDto.method(), userRequestLogDto.requestParameters, userRequestLogDto.ip());
         }
+
+        public static UserRequestLogDto toUserRequestLogDto(UserRequestLog userRequestLog) {
+            return new UserRequestLogDto(
+                    userRequestLog.getServer(),
+                    userRequestLog.getRequestUrl(),
+                    userRequestLog.getMethod(),
+                    userRequestLog.getRequestParameters(),
+                    userRequestLog.getIp()
+            );
+        }
     }
 }

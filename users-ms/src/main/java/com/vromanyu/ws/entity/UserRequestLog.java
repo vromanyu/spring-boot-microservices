@@ -27,13 +27,17 @@ public class UserRequestLog {
     @Column(length = 500)
     private String requestParameters;
 
+    @Column(length = 100)
+    private String ip;
+
     @CreationTimestamp
     private OffsetDateTime requestTime;
 
-    public UserRequestLog(String server, String requestUrl, String method, String requestParameters) {
+    public UserRequestLog(String server, String requestUrl, String method, String requestParameters, String ip) {
         this.server = server;
         this.requestUrl = requestUrl;
         this.method = method;
         this.requestParameters = requestParameters;
+        this.ip = ip;
     }
 }

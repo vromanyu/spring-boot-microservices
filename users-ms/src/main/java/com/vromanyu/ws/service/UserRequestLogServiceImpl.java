@@ -21,7 +21,8 @@ public class UserRequestLogServiceImpl implements  UserRequestLogService{
                 request.getServerName() + ":" + request.getServerPort(),
                 request.getRequestURL().toString(),
                 request.getMethod(),
-                request.getQueryString()
+                request.getQueryString(),
+                request.getRemoteAddr()
         );
         userRequestLogRepository.save(UserRequestLogDto.UserRequestLogMapper.toUserRequestLog(userRequestLogDto));
     }

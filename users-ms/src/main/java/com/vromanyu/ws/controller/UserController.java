@@ -3,7 +3,6 @@ package com.vromanyu.ws.controller;
 import com.vromanyu.ws.dto.UserDto;
 import com.vromanyu.ws.entity.User;
 import com.vromanyu.ws.service.UserRequestLogService;
-import com.vromanyu.ws.service.UserRequestLogServiceImpl;
 import com.vromanyu.ws.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

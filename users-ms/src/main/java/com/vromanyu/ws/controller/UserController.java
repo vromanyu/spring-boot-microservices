@@ -2,6 +2,7 @@ package com.vromanyu.ws.controller;
 
 import com.vromanyu.ws.dto.UserDto;
 import com.vromanyu.ws.entity.User;
+import com.vromanyu.ws.service.UserRequestLogService;
 import com.vromanyu.ws.service.UserRequestLogServiceImpl;
 import com.vromanyu.ws.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +26,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserRequestLogServiceImpl userRequestLogService;
+    private final UserRequestLogService userRequestLogService;
 
     @Operation(
             tags = {"users"},

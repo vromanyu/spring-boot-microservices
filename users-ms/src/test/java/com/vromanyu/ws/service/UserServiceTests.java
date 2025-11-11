@@ -13,7 +13,7 @@ import java.util.List;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
-class SpringbootRestfulWebservicesApplicationUserServiceTests {
+class UserServiceTests {
 
     @Autowired
     private UserService userService;

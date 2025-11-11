@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
-class SpringbootRestfulWebservicesApplicationRepositoryTests {
+class UserRepositoryTests {
 
     @Autowired
     private UserRepository userRepository;

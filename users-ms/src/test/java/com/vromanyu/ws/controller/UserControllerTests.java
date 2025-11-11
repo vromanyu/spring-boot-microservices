@@ -3,7 +3,10 @@ package com.vromanyu.ws.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vromanyu.ws.dto.UserDto;
 import com.vromanyu.ws.exception.ResourceNotFound;
+import com.vromanyu.ws.service.UserRequestLogService;
 import com.vromanyu.ws.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = UserController.class)
-class SpringbootRestfulWebservicesApplicationUserControllerTests {
+class UserControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,8 +32,16 @@ class SpringbootRestfulWebservicesApplicationUserControllerTests {
     @MockitoBean
     private UserService userService;
 
+    @MockitoBean
+    private UserRequestLogService userRequestLogService;
+
     @Autowired
     private ObjectMapper objectMapper;
+
+    @BeforeEach
+    public void setup(){
+        Mockito.doNothing().when(userRequestLogService).logRequest(Mockito.any(HttpServletRequest.class));
+    }
 
     @Test
     public void shouldCreateUser() throws Exception {

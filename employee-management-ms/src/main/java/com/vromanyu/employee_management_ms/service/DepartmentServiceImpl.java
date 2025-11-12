@@ -31,4 +31,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<DepartmentDto> getAllDepartments() {
         return departmentRepository.findAll().stream().map(DepartmentDto.DepartmentMapper::toDto).toList();
     }
+
+    @Override
+    public DepartmentDto updateDepartment(long id, DepartmentDto departmentDto) {
+        Department savedDepartment =  departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("department not found"));
+        savedDepartment.setDepartmentName(departmentDto.departmentName());
+        savedDepartment.setDepartmentDescription(departmentDto.departmentDescription());
+        Department updatedDepartment = departmentRepository.save(savedDepartment);
+        return DepartmentDto.DepartmentMapper.toDto(updatedDepartment);
+    }
+
 }

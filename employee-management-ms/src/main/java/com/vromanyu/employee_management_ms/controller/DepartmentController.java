@@ -34,4 +34,10 @@ public class DepartmentController {
     public ResponseEntity<List<DepartmentDto>> getAllDepartments() {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable long id, @RequestBody DepartmentDto departmentDto) {
+        DepartmentDto savedDepartmentDto = departmentService.updateDepartment(id, departmentDto);
+        return ResponseEntity.ok(savedDepartmentDto);
+    }
 }

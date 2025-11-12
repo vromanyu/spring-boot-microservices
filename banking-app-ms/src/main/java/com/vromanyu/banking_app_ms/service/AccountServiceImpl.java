@@ -55,4 +55,10 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountDto> getAllAccounts() {
         return accountRepository.findAll().stream().map(AccountDto.AccountMapper::toAccountDto).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAccountById(long id) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        accountRepository.delete(account);
+    }
 }

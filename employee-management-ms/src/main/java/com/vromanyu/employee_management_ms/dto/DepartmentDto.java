@@ -13,7 +13,7 @@ public record DepartmentDto(Long id, String departmentName, String departmentDes
             return new DepartmentDto(department.getId(),
                     department.getDepartmentName(),
                     department.getDepartmentDescription(),
-                    department.getEmployees().stream().map(EmployeeDto.EmployeeMapper::toDto).toList());
+                    null);
         }
 
         public static Department fromDto(DepartmentDto dto) {
@@ -21,7 +21,9 @@ public record DepartmentDto(Long id, String departmentName, String departmentDes
             department.setId(dto.id());
             department.setDepartmentName(dto.departmentName());
             department.setDepartmentDescription(dto.departmentDescription());
-            department.setEmployees(dto.employees().stream().map(EmployeeDto.EmployeeMapper::toEntity).toList());
+            if (dto.employees() != null) {
+                department.setEmployees(dto.employees().stream().map(EmployeeDto.EmployeeMapper::toEntity).toList());
+            }
             return department;
         }
 

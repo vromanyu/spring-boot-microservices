@@ -3,6 +3,7 @@ package com.vromanyu.employee_management_ms.service;
 import com.vromanyu.employee_management_ms.dto.DepartmentDto;
 import com.vromanyu.employee_management_ms.entity.Department;
 import com.vromanyu.employee_management_ms.repository.DepartmentRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;

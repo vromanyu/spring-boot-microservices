@@ -2,7 +2,7 @@ package com.vromanyu.employee_management_ms.dto;
 
 import com.vromanyu.employee_management_ms.entity.Employee;
 
-public record EmployeeDto(long id, String firstName, String lastName, String email, DepartmentDto department) {
+public record EmployeeDto(Long id, String firstName, String lastName, String email, DepartmentDto department) {
 
     public static final class EmployeeMapper {
 
@@ -20,7 +20,9 @@ public record EmployeeDto(long id, String firstName, String lastName, String ema
             employee.setFirstName(employeeDto.firstName());
             employee.setLastName(employeeDto.lastName());
             employee.setEmail(employeeDto.email());
-            employee.setDepartment(DepartmentDto.DepartmentMapper.fromDto(employeeDto.department()));
+            if (employeeDto.department() != null) {
+                employee.setDepartment(DepartmentDto.DepartmentMapper.fromDto(employeeDto.department()));
+            }
             return employee;
         }
     }

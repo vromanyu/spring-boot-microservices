@@ -9,4 +9,5 @@ public interface DepartmentService {
     DepartmentDto getDepartmentById(long id);
     List<DepartmentDto> getAllDepartments();
     DepartmentDto updateDepartment(long id, DepartmentDto departmentDto);
+    void deleteDepartment(long id);
 }

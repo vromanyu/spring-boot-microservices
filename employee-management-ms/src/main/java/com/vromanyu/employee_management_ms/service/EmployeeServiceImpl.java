@@ -9,6 +9,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -31,6 +34,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new RuntimeException("department not found"));
         Employee employee = department.getEmployees().stream().filter(e -> e.getId() == id).findFirst().orElseThrow(() -> new RuntimeException("employee not found"));
         return EmployeeDto.EmployeeMapper.toDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployeesByDeparment(long departmentId) {
+        Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new RuntimeException("department not found"));
+        return department.getEmployees().stream().map(EmployeeDto.EmployeeMapper::toDto).collect(Collectors.toList());
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +28,11 @@ public class EmployeeController {
     @GetMapping(value = "/{departmentId}/employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long departmentId, @PathVariable long id) {
         return ResponseEntity.ok(employeeService.getEmployeeById(departmentId, id));
+    }
+
+    @GetMapping(value = "/{departmentId}/employee", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees(@PathVariable Long departmentId) {
+        return ResponseEntity.ok(employeeService.getAllEmployeesByDeparment(departmentId));
     }
 
 }

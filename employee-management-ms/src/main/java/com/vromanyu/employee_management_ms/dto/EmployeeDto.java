@@ -11,7 +11,7 @@ public record EmployeeDto(Long id, String firstName, String lastName, String ema
                     employee.getFirstName(),
                     employee.getFirstName(),
                     employee.getEmail(),
-                    DepartmentDto.DepartmentMapper.toDto(employee.getDepartment()));
+                    null);
         }
 
         public static Employee toEntity(EmployeeDto employeeDto) {

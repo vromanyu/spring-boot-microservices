@@ -19,6 +19,24 @@ services:
     networks:
       microservices-network:
 
+  banking-app-ms:
+      image: vromanyu/banking-app-ms
+      container_name: banking-app-ms
+      hostname: banking-app-ms
+      depends_on:
+        postgresql:
+          condition: service_healthy
+      environment:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+        SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      ports:
+        - "8082:8082"
+      networks:
+        microservices-network:
+
   postgresql:
     image: postgres:latest
     container_name: postgres

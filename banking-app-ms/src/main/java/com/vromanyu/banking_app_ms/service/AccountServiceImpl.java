@@ -7,6 +7,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -46,5 +49,10 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(account.getBalance() - amount);
         Account updatedAccount = accountRepository.save(account);
         return AccountDto.AccountMapper.toAccountDto(updatedAccount);
+    }
+
+    @Override
+    public List<AccountDto> getAllAccounts() {
+        return accountRepository.findAll().stream().map(AccountDto.AccountMapper::toAccountDto).collect(Collectors.toList());
     }
 }

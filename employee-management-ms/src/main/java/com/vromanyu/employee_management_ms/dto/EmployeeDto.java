@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vromanyu.employee_management_ms.entity.Employee;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record EmployeeDto(Long id, String firstName, String lastName, String email, DepartmentDto department) {
+public record EmployeeDto(Long id, String firstName, String lastName, String email) {
 
     public static final class EmployeeMapper {
 
@@ -12,8 +12,7 @@ public record EmployeeDto(Long id, String firstName, String lastName, String ema
             return new EmployeeDto(employee.getId(),
                     employee.getFirstName(),
                     employee.getFirstName(),
-                    employee.getEmail(),
-                    null);
+                    employee.getEmail());
         }
 
         public static Employee toEntity(EmployeeDto employeeDto) {
@@ -22,9 +21,6 @@ public record EmployeeDto(Long id, String firstName, String lastName, String ema
             employee.setFirstName(employeeDto.firstName());
             employee.setLastName(employeeDto.lastName());
             employee.setEmail(employeeDto.email());
-            if (employeeDto.department() != null) {
-                employee.setDepartment(DepartmentDto.DepartmentMapper.fromDto(employeeDto.department()));
-            }
             return employee;
         }
     }

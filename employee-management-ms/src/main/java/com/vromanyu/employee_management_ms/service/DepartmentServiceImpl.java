@@ -1,6 +1,8 @@
 package com.vromanyu.employee_management_ms.service;
 
 import com.vromanyu.employee_management_ms.dto.DepartmentDto;
+import com.vromanyu.employee_management_ms.dto.DepartmentWithEmployeesDto;
+import com.vromanyu.employee_management_ms.dto.EmployeeDto;
 import com.vromanyu.employee_management_ms.entity.Department;
 import com.vromanyu.employee_management_ms.repository.DepartmentRepository;
 import jakarta.transaction.Transactional;
@@ -24,14 +26,24 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto getDepartmentById(long id) {
+    public DepartmentWithEmployeesDto getDepartmentById(long id) {
         Department department = departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("department not found"));
-        return DepartmentDto.DepartmentMapper.toDto(department);
+        List<EmployeeDto> employees = department.getEmployees().stream().map(EmployeeDto.EmployeeMapper::toDto).toList();
+        return new DepartmentWithEmployeesDto(department.getId(), department.getDepartmentName(), department.getDepartmentDescription(), employees);
     }
 
     @Override
-    public List<DepartmentDto> getAllDepartments() {
-        return departmentRepository.findAll().stream().map(DepartmentDto.DepartmentMapper::toDto).toList();
+    public List<DepartmentWithEmployeesDto> getAllDepartments() {
+        List<Department> departments = departmentRepository.findAll();
+        return departments.stream().map(department -> {
+            List<EmployeeDto> employees = department.getEmployees().stream().map(EmployeeDto.EmployeeMapper::toDto).toList();
+            return new DepartmentWithEmployeesDto(
+                    department.getId(),
+                    department.getDepartmentName(),
+                    department.getDepartmentDescription(),
+                    employees
+            );
+        }).toList();
     }
 
     @Override

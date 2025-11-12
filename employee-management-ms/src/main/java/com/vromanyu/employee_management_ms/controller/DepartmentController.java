@@ -1,6 +1,7 @@
 package com.vromanyu.employee_management_ms.controller;
 
 import com.vromanyu.employee_management_ms.dto.DepartmentDto;
+import com.vromanyu.employee_management_ms.dto.DepartmentWithEmployeesDto;
 import com.vromanyu.employee_management_ms.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -26,12 +27,12 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable long id) {
+    public ResponseEntity<DepartmentWithEmployeesDto> getDepartmentById(@PathVariable long id) {
         return ResponseEntity.ok(departmentService.getDepartmentById(id));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<DepartmentDto>> getAllDepartments() {
+    public ResponseEntity<List<DepartmentWithEmployeesDto>> getAllDepartments() {
         return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 

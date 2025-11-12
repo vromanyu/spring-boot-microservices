@@ -53,4 +53,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return EmployeeDto.EmployeeMapper.toDto(updatedEmployee);
     }
 
+    @Override
+    public void deleteEmployee(long departmentId, long id) {
+        Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new RuntimeException("department not found"));
+        Employee employee = department.getEmployees().stream().filter(e -> e.getId() == id).findFirst().orElseThrow(() -> new RuntimeException("employee not found"));
+        department.removeEmployee(employee);
+        employeeRepository.deleteById(employee.getId());
+    }
+
 }

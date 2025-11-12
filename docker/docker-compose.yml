@@ -2,7 +2,7 @@ name: spring-boot-microservices
 
 services:
   users-ms:
-    image: vromanyu/users-ms
+    image: vromanyu/users-ms:jdk-25
     container_name: users-ms
     hostname: users-ms
     depends_on:
@@ -20,7 +20,7 @@ services:
       microservices-network:
 
   banking-app-ms:
-      image: vromanyu/banking-app-ms
+      image: vromanyu/banking-app-ms:jdk-25
       container_name: banking-app-ms
       hostname: banking-app-ms
       depends_on:
@@ -38,7 +38,7 @@ services:
         microservices-network:
 
   employee-management-ms:
-    image: vromanyu/employee-management-ms
+    image: vromanyu/employee-management-ms:jdk-25
     container_name: employee-management-ms
     hostname: employee-management-ms
     depends_on:

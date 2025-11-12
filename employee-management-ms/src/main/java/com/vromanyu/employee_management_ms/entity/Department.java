@@ -27,11 +27,13 @@ public class Department {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Employee> employees = new ArrayList<>();
 
+    @SuppressWarnings("unused")
     public void addEmployee(Employee employee) {
         this.employees.add(employee);
         employee.setDepartment(this);
     }
 
+    @SuppressWarnings("unused")
     public void removeEmployee(Employee employee) {
         this.employees.remove(employee);
     }

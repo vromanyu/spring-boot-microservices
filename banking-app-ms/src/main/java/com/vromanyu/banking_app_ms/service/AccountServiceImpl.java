@@ -7,8 +7,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,5 +27,13 @@ public class AccountServiceImpl implements AccountService {
                         accountRepository
                                 .findById(id)
                                 .orElseThrow(() -> new RuntimeException("Account not found")));
+    }
+
+    @Override
+    public AccountDto deposit(long id, double amount) {
+        Account account =  accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        account.setBalance(account.getBalance() + amount);
+        Account updatedAccount = accountRepository.save(account);
+        return AccountDto.AccountMapper.toAccountDto(updatedAccount);
     }
 }

@@ -5,4 +5,5 @@ import com.vromanyu.banking_app_ms.dto.AccountDto;
 public interface AccountService {
     AccountDto createAccount(AccountDto accountDto);
     AccountDto getAccountById(long id);
+    AccountDto deposit(long id, double amount);
 }

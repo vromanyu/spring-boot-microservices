@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/account")
@@ -27,5 +28,10 @@ public class AccountController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id){
         return ResponseEntity.ok(accountService.getAccountById(id));
+    }
+
+    @PutMapping(value = "/{id}/deposit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccountDto> deposit(@PathVariable Long id, @RequestBody Map<String, Double> amount){
+        return ResponseEntity.ok(accountService.deposit(id, amount.get("amount")));
     }
 }

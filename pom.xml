@@ -10,6 +10,7 @@
     <modules>
         <module>users-ms</module>
         <module>banking-app-ms</module>
+        <module>employee-management-ms</module>
     </modules>
 
 </project>

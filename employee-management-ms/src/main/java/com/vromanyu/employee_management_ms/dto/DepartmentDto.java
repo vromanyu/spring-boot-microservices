@@ -1,10 +1,12 @@
 package com.vromanyu.employee_management_ms.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vromanyu.employee_management_ms.entity.Department;
 
 import java.util.List;
 
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record DepartmentDto(Long id, String departmentName, String departmentDescription, List<EmployeeDto> employees) {
 
     public static final class DepartmentMapper {

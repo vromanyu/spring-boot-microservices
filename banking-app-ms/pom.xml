@@ -103,7 +103,7 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <name>vromanyu/${project.name}:latest</name>
+                        <name>vromanyu/${project.name}-jdk-${java.version}:latest</name>
                         <publish>true</publish>
                     </image>
                     <docker>

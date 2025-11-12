@@ -35,4 +35,10 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getAllEmployeesByDeparment(departmentId));
     }
 
+    @PutMapping(value = "/{departmentId}/employee/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long departmentId, @PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+        EmployeeDto savedEmployee = employeeService.updateEmployee(departmentId, id, employeeDto);
+        return ResponseEntity.ok(savedEmployee);
+    }
+
 }

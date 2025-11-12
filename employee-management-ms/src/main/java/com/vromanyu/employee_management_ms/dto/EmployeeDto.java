@@ -1,7 +1,9 @@
 package com.vromanyu.employee_management_ms.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vromanyu.employee_management_ms.entity.Employee;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record EmployeeDto(Long id, String firstName, String lastName, String email, DepartmentDto department) {
 
     public static final class EmployeeMapper {

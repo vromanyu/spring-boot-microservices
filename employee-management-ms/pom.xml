@@ -73,6 +73,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-image-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <excludes>
                         <exclude>
@@ -80,6 +87,19 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <image>
+                        <name>vromanyu/${project.name}:latest</name>
+                        <publish>true</publish>
+                    </image>
+                    <docker>
+                        <publishRegistry>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <username>${env.DOCKER_USERNAME}</username>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <password>${env.DOCKER_PASSWORD}</password>
+                        </publishRegistry>
+                    </docker>
+                    <imageBuilder>paketobuildpacks/builder-jammy-base</imageBuilder>
                 </configuration>
             </plugin>
         </plugins>

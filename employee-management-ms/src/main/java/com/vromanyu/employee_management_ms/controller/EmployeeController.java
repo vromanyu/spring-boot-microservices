@@ -23,4 +23,10 @@ public class EmployeeController {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedEmployee.id()).toUri();
         return ResponseEntity.created(location).body(savedEmployee);
     }
+
+    @GetMapping(value = "/{departmentId}/employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long departmentId, @PathVariable long id) {
+        return ResponseEntity.ok(employeeService.getEmployeeById(departmentId, id));
+    }
+
 }

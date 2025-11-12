@@ -9,6 +9,7 @@
 
     <modules>
         <module>users-ms</module>
+        <module>banking-app-ms</module>
     </modules>
 
 </project>

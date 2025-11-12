@@ -4,4 +4,5 @@ import com.vromanyu.employee_management_ms.dto.DepartmentDto;
 
 public interface DepartmentService {
     DepartmentDto addDepartment(DepartmentDto departmentDto);
+    DepartmentDto getDepartmentById(long id);
 }

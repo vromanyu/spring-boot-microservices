@@ -6,6 +6,8 @@ import com.vromanyu.employee_management_ms.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
@@ -23,5 +25,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto getDepartmentById(long id) {
         Department department = departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("department not found"));
         return DepartmentDto.DepartmentMapper.toDto(department);
+    }
+
+    @Override
+    public List<DepartmentDto> getAllDepartments() {
+        return departmentRepository.findAll().stream().map(DepartmentDto.DepartmentMapper::toDto).toList();
     }
 }

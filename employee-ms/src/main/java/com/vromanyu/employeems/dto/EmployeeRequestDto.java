@@ -5,14 +5,17 @@ import jakarta.validation.constraints.NotBlank;
 
 public record EmployeeRequestDto(
 
-        @NotBlank
+        @NotBlank(message = "firstName can't be blank")
         String firstName,
 
-        @NotBlank
+        @NotBlank(message = "lastName can't be blank")
         String lastName,
 
-        @NotBlank
-        @Email
-        String email
+        @NotBlank(message = "email can't be blank")
+        @Email(message = "invalid email format")
+        String email,
+
+        @NotBlank(message = "departmentId can't be blank")
+        String departmentId
 ) {
 }

@@ -13,6 +13,7 @@ public class EmployeeMapper {
         employee.setFirstName(employeeRequestDto.firstName());
         employee.setLastName(employeeRequestDto.lastName());
         employee.setEmail(employeeRequestDto.email());
+        employee.setDepartmentId(employeeRequestDto.departmentId());
         return employee;
     }
 
@@ -22,4 +23,5 @@ public class EmployeeMapper {
                 employee.getLastName(),
                 employee.getEmail());
     }
+
 }

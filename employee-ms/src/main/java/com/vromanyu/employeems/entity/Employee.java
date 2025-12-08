@@ -30,6 +30,8 @@ public class Employee {
     @Column(nullable = false)
     private String email;
 
+    private String departmentId;
+
     @CreationTimestamp
     private LocalDateTime creationDate;
 

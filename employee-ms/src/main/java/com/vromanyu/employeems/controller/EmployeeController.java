@@ -2,6 +2,7 @@ package com.vromanyu.employeems.controller;
 
 import com.vromanyu.employeems.dto.EmployeeRequestDto;
 import com.vromanyu.employeems.dto.EmployeeResponseDto;
+import com.vromanyu.employeems.dto.EmployeeResponseWithDepartmentDto;
 import com.vromanyu.employeems.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.NonNull;
@@ -29,8 +30,8 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<@NonNull EmployeeResponseDto> getById(@PathVariable(name = "id") Integer id) {
-        EmployeeResponseDto savedEmployee = employeeService.getById(id);
+    public ResponseEntity<@NonNull EmployeeResponseWithDepartmentDto> getById(@PathVariable(name = "id") Integer id) {
+        EmployeeResponseWithDepartmentDto savedEmployee = employeeService.getById(id);
         return ResponseEntity.ok(savedEmployee);
     }
 

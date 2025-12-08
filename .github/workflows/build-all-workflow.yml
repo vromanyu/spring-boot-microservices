@@ -1,4 +1,4 @@
-name: banking-app-ms-workflow
+name: build-all-workflow
 on:
   workflow_dispatch:
 

@@ -16,6 +16,12 @@
         <module name="employee-management-ms" />
         <module name="employee-ms" />
       </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ms-registry" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="employee-service" target="21" />
@@ -29,6 +35,7 @@
       <module name="employee-management-ms" options="-parameters" />
       <module name="employee-ms" options="-parameters" />
       <module name="employee-service" options="-parameters" />
+      <module name="ms-registry" options="-parameters" />
       <module name="users-ms" options="-parameters" />
     </option>
   </component>

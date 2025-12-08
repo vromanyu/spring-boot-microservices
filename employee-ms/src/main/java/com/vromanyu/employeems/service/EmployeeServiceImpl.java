@@ -9,10 +9,7 @@ import com.vromanyu.employeems.mapper.EmployeeMapper;
 import com.vromanyu.employeems.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final RestClient restClient;
+    private final DepartmentMsClient departmentMsClient;
 
     @Override
     public EmployeeResponseDto save(EmployeeRequestDto employeeRequestDto) {
@@ -35,8 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private boolean isValidDepartment(EmployeeRequestDto employeeRequestDto) {
-        ResponseEntity<@NonNull DepartmentDto> response = restClient.get().uri("http://localhost:8181/api/departments/{id}", employeeRequestDto.departmentId()).retrieve().toEntity(DepartmentDto.class);
-        DepartmentDto departmentDto = response.getBody();
+        DepartmentDto departmentDto = departmentMsClient.getById(Integer.valueOf(employeeRequestDto.departmentId()));
         return departmentDto != null;
     }
 
@@ -46,8 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("employee with id " + id + " not found"));
 
-        ResponseEntity<@NonNull DepartmentDto> response = restClient.get().uri("http://localhost:8181/api/departments/{id}", employee.getDepartmentId()).retrieve().toEntity(DepartmentDto.class);
-        DepartmentDto departmentDto = response.getBody();
+        DepartmentDto departmentDto = departmentMsClient.getById(Integer.valueOf(employee.getDepartmentId()));
         EmployeeResponseDto employeeResponseDto = EmployeeMapper.toEmployeeResponseDto(employee);
         return new EmployeeResponseWithDepartmentDto(employeeResponseDto, departmentDto);
     }

@@ -34,9 +34,10 @@ public class GlobalExceptionHandler {
         InternalErrorDto internalErrorDto = new InternalErrorDto(
                 request.getRequestURI(),
                 e.getMessage(),
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 LocalDateTime.now(ZoneOffset.UTC)
         );
         return new ResponseEntity<>(internalErrorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

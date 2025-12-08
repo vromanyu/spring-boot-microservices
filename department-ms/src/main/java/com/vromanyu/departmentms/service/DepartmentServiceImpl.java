@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 @AllArgsConstructor
@@ -29,5 +31,11 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("department with id " + id + " not found"));
         return DepartmentMapper.toDepartmentResponseDto(department);
+    }
+
+    @Override
+    public List<DepartmentResponseDto> getAll() {
+        List<Department> allDepartments = departmentRepository.findAll();
+        return allDepartments.stream().map(DepartmentMapper::toDepartmentResponseDto).toList();
     }
 }

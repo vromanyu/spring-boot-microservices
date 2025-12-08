@@ -1,0 +1,54 @@
+name: ms-registry-workflow
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ms-registry/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ms-registry/**
+  workflow_dispatch:
+
+jobs:
+  ms-registry-ci:
+    strategy:
+      matrix:
+        java-version: [21, 25]
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+    env:
+      POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+      POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+      POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+      DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+      DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    steps:
+      - name: Clone
+        uses: actions/checkout@v5
+      - name: JDK Setup
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{matrix.java-version}}
+          distribution: 'temurin'
+          architecture: x64
+          cache: 'maven'
+      - name: Build/Test
+        id: build
+        run: mvn -B package --file ./ms-registry/pom.xml -Djava.version=${{matrix.java-version}}
+      - name: Upload Artifact
+        if: success() && steps.build.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{matrix.java-version}}
+          path: ./ms-registry/target/*.jar

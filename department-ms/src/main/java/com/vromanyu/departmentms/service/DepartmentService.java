@@ -5,5 +5,5 @@ import com.vromanyu.departmentms.dto.DepartmentResponseDto;
 
 public interface DepartmentService {
     DepartmentResponseDto save(DepartmentRequestDto departmentRequestDto);
-
+    DepartmentResponseDto getById(Integer id);
 }

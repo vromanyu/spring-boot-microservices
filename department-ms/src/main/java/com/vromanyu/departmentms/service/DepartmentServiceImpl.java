@@ -22,4 +22,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department savedDepartment = departmentRepository.save(department);
         return DepartmentMapper.toDepartmentResponseDto(savedDepartment);
     }
+
+    @Override
+    public DepartmentResponseDto getById(Integer id) {
+        Department department = departmentRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("department with id " + id + " not found"));
+        return DepartmentMapper.toDepartmentResponseDto(department);
+    }
 }

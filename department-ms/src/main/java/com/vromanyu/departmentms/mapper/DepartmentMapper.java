@@ -1,4 +1,4 @@
-package com.vromanyu.mapper;
+package com.vromanyu.departmentms.mapper;
 
 import com.vromanyu.departmentms.dto.DepartmentRequestDto;
 import com.vromanyu.departmentms.dto.DepartmentResponseDto;

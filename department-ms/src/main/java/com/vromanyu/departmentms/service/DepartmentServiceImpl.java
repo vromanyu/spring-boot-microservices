@@ -4,7 +4,7 @@ import com.vromanyu.departmentms.dto.DepartmentRequestDto;
 import com.vromanyu.departmentms.dto.DepartmentResponseDto;
 import com.vromanyu.departmentms.entity.Department;
 import com.vromanyu.departmentms.repository.DepartmentRepository;
-import com.vromanyu.mapper.DepartmentMapper;
+import com.vromanyu.departmentms.mapper.DepartmentMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

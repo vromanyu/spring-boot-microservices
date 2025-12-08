@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -28,6 +25,12 @@ public class DepartmentController {
         DepartmentResponseDto savedDepartment = departmentService.save(departmentRequestDto);
         URI savedDepartmentLocation = builder.path("/departments/{id}").build(savedDepartment.id());
         return ResponseEntity.created(savedDepartmentLocation).body(savedDepartment);
+    }
+
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<@NonNull DepartmentResponseDto> getById(@PathVariable(name = "id") Integer id) {
+        DepartmentResponseDto savedDepartment = departmentService.getById(id);
+        return ResponseEntity.ok(savedDepartment);
     }
 
 }

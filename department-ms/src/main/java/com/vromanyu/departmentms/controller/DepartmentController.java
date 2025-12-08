@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/departments")
@@ -31,6 +32,12 @@ public class DepartmentController {
     public ResponseEntity<@NonNull DepartmentResponseDto> getById(@PathVariable(name = "id") Integer id) {
         DepartmentResponseDto savedDepartment = departmentService.getById(id);
         return ResponseEntity.ok(savedDepartment);
+    }
+
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<@NonNull List<DepartmentResponseDto>> getAll() {
+        List<DepartmentResponseDto> savedDepartments = departmentService.getAll();
+        return ResponseEntity.ok(savedDepartments);
     }
 
 }

@@ -26,9 +26,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeResponseDto save(EmployeeRequestDto employeeRequestDto) {
+        if (!isValidDepartment(employeeRequestDto)) {
+            throw new RuntimeException("invalid department id");
+        }
         Employee employee = EmployeeMapper.toEmployee(employeeRequestDto);
         Employee savedEmployee = employeeRepository.save(employee);
         return EmployeeMapper.toEmployeeResponseDto(savedEmployee);
+    }
+
+    private boolean isValidDepartment(EmployeeRequestDto employeeRequestDto) {
+        ResponseEntity<DepartmentDto> response = restTemplate.getForEntity("http://localhost:8181/api/departments/" + employeeRequestDto.departmentId(), DepartmentDto.class);
+        DepartmentDto departmentDto = response.getBody();
+        return departmentDto != null;
     }
 
     @Override
@@ -48,4 +57,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> allEmployees = employeeRepository.findAll();
         return allEmployees.stream().map(EmployeeMapper::toEmployeeResponseDto).toList();
     }
+
 }

@@ -35,10 +35,4 @@ public class Department {
 
     @UpdateTimestamp
     private LocalDateTime updateDate;
-
-    public Department(String name, String description, String code) {
-        this.name = name;
-        this.description = description;
-        this.code = code;
-    }
 }

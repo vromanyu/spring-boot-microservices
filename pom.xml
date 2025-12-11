@@ -9,10 +9,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
+        <module>api-gateway</module>
+        <module>config-server</module>
         <module>department-ms</module>
         <module>employee-ms</module>
         <module>ms-registry</module>
-        <module>api-gateway</module>
     </modules>
 
 </project>

@@ -9,9 +9,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
-        <module>users-ms</module>
-        <module>banking-app-ms</module>
-        <module>employee-management-ms</module>
         <module>department-ms</module>
         <module>employee-ms</module>
         <module>ms-registry</module>

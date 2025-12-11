@@ -10,27 +10,31 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="users-ms" />
-        <module name="banking-app-ms" />
         <module name="department-ms" />
-        <module name="employee-management-ms" />
         <module name="employee-ms" />
       </profile>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="api-gateway" />
         <module name="ms-registry" />
+        <module name="config-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="banking-app-ms" target="21" />
+      <module name="employee-management-ms" target="21" />
       <module name="employee-service" target="21" />
       <module name="springboot-restful-webservices" target="25" />
+      <module name="users-ms" target="25" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
       <module name="banking-app-ms" options="-parameters" />
+      <module name="config-server" options="-parameters" />
       <module name="department-ms" options="-parameters" />
       <module name="employee-management-ms" options="-parameters" />
       <module name="employee-ms" options="-parameters" />

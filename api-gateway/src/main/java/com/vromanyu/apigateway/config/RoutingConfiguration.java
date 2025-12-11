@@ -12,6 +12,12 @@ public class RoutingConfiguration {
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
+                .route(p -> p.path("/api-gateway/employees/info")
+                        .filters(f -> f.rewritePath("/api-gateway/employees/info", "/actuator/info"))
+                        .uri("lb://EMPLOYEE-MS"))
+                .route(p -> p.path("/api-gateway/departments/info")
+                        .filters(f -> f.rewritePath("/api-gateway/departments/info", "/actuator/info"))
+                        .uri("lb://DEPARTMENT-MS"))
                 .route(p -> p.path("/api-gateway/employees", "/api-gateway/employees/**")
                         .filters(f -> {
                             f.rewritePath("/api-gateway/employees(?<segment>.*)", "/api/employees${segment}");

@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface DepartmentMsClient {
 
     @GetMapping(value = "api/departments/{id}", produces = "application/json")
-    DepartmentDto getById(@PathVariable(name = "id") Integer id);
+    DepartmentDto getById(@PathVariable Integer id);
 }

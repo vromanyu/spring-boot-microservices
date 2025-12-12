@@ -1,6 +1,7 @@
 package com.vromanyu.employeems.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public record EmployeeRequestDto(
@@ -15,7 +16,7 @@ public record EmployeeRequestDto(
         @Email(message = "invalid email format")
         String email,
 
-        @NotBlank(message = "departmentId can't be blank")
+        @Min(value = 1, message = "invalid department id")
         Integer departmentId
 ) {
 }

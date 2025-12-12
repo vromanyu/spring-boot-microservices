@@ -16,6 +16,6 @@ public record EmployeeRequestDto(
         String email,
 
         @NotBlank(message = "departmentId can't be blank")
-        String departmentId
+        Integer departmentId
 ) {
 }

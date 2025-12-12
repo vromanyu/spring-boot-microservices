@@ -30,7 +30,7 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<@NonNull EmployeeResponseWithDepartmentDto> getById(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<@NonNull EmployeeResponseWithDepartmentDto> getById(@PathVariable Integer id) {
         EmployeeResponseWithDepartmentDto savedEmployee = employeeService.getById(id);
         return ResponseEntity.ok(savedEmployee);
     }

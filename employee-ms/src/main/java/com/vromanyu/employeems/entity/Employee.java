@@ -31,7 +31,7 @@ public class Employee {
     private String email;
 
     @Column(nullable = false)
-    private String departmentId;
+    private Integer departmentId;
 
     @CreationTimestamp
     private LocalDateTime creationDate;

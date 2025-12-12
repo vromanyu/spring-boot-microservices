@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private boolean isValidDepartment(EmployeeRequestDto employeeRequestDto) {
-        DepartmentDto departmentDto = departmentMsClient.getById(Integer.valueOf(employeeRequestDto.departmentId()));
+        DepartmentDto departmentDto = departmentMsClient.getById(employeeRequestDto.departmentId());
         return departmentDto != null;
     }
 
@@ -42,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("employee with id " + id + " not found"));
 
-        DepartmentDto departmentDto = departmentMsClient.getById(Integer.valueOf(employee.getDepartmentId()));
+        DepartmentDto departmentDto = departmentMsClient.getById(employee.getDepartmentId());
         EmployeeResponseDto employeeResponseDto = EmployeeMapper.toEmployeeResponseDto(employee);
         return new EmployeeResponseWithDepartmentDto(employeeResponseDto, departmentDto);
     }

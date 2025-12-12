@@ -29,7 +29,7 @@ public class RoutingConfiguration {
                             });
                             return f;
                         })
-                                .uri("lb://EMPLOYEE-MS"))
+                        .uri("lb://EMPLOYEE-MS"))
                 .route(p -> p.path("/api-gateway/departments", "/api-gateway/departments/**")
                         .filters(f -> {
                             f.rewritePath("/api-gateway/departments(?<segment>.*)", "/api/departments${segment}");

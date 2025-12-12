@@ -23,7 +23,10 @@ public class RoutingConfiguration {
                             f.rewritePath("/api-gateway/employees(?<segment>.*)", "/api/employees${segment}");
                             f.addRequestHeader("GATEWAY-REQUEST", "1");
                             f.addResponseHeader("GATEWAY-RESPONSE", "1");
-                            f.circuitBreaker(config -> config.setName("GATEWAY-EMPLOYEE-CIRCUIT-BREAKER"));
+                            f.circuitBreaker(config -> {
+                                config.setName("GATEWAY-EMPLOYEE-CIRCUIT-BREAKER");
+                                config.setFallbackUri("/unavailable");
+                            });
                             return f;
                         })
                                 .uri("lb://EMPLOYEE-MS"))

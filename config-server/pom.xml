@@ -83,7 +83,7 @@
                             <password>${env.DOCKER_PASSWORD}</password>
                         </publishRegistry>
                     </docker>
-                    <imageBuilder>paketobuildpacks/builder-jammy-base</imageBuilder>
+                    <imageBuilder>paketobuildpacks/builder-jammy-full</imageBuilder>
                 </configuration>
             </plugin>
         </plugins>

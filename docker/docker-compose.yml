@@ -185,8 +185,15 @@ services:
 
   grafana:
     image: grafana/grafana
+    container_name: grafana
+    hostname: grafana
     ports:
       - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
       - microservices-network
 

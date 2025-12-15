@@ -1,57 +1,111 @@
 name: spring-boot-microservices
 
 services:
-  users-ms:
-    image: vromanyu/users-ms:jdk-25
-    container_name: users-ms
-    hostname: users-ms
-    depends_on:
-      postgresql:
-        condition: service_healthy
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-    ports:
-      - "8081:8081"
+
+  config-server:
+    image: vromanyu/config-server:jdk-25
+    container_name: config-server
+    hostname: config-server
+    healthcheck:
+      test: "curl --fail --silent localhost:8888/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
     networks:
       microservices-network:
 
-  banking-app-ms:
-      image: vromanyu/banking-app-ms:jdk-25
-      container_name: banking-app-ms
-      hostname: banking-app-ms
-      depends_on:
-        postgresql:
-          condition: service_healthy
-      environment:
-        POSTGRES_USER: ${POSTGRES_USER}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-        POSTGRES_DB: ${POSTGRES_DB}
-        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
-        SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      ports:
-        - "8082:8082"
-      networks:
-        microservices-network:
-
-  employee-management-ms:
-    image: vromanyu/employee-management-ms:jdk-25
-    container_name: employee-management-ms
-    hostname: employee-management-ms
-    depends_on:
-      postgresql:
-        condition: service_healthy
+  ms-registry:
+    image: vromanyu/ms-registry:jdk-25
+    container_name: ms-registry
+    hostname: ms-registry
+    ports:
+      - "8761:8761"
     environment:
+      CONFIG_SERVER: "config-server"
+    depends_on:
+      config-server:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      microservices-network:
+
+  api-gateway:
+    image: vromanyu/api-gateway:jdk-25
+    container_name: api-gateway
+    hostname: api-gateway
+    environment:
+      CONFIG_SERVER: "config-server"
+      MS_REGISTRY: "ms-registry"
+      REDIS_HOST: "redis"
+    ports:
+      - "8585:8585"
+    depends_on:
+      ms-registry:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8585/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      microservices-network:
+
+  department-ms:
+    image: vromanyu/department-ms:jdk-25
+    container_name: department-ms
+    hostname: department-ms
+    environment:
+      CONFIG_SERVER: "config-server"
+      MS_REGISTRY: "ms-registry"
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-    ports:
-      - "8083:8083"
+      POSTGRES_HOSTNAME: "postgres"
+    depends_on:
+      ms-registry:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8182/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      microservices-network:
+
+  employee-ms:
+    image: vromanyu/employee-ms:jdk-25
+    container_name: employee-ms
+    hostname: employee-ms
+    environment:
+      CONFIG_SERVER: "config-server"
+      MS_REGISTRY: "ms-registry"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOSTNAME: "postgres"
+    depends_on:
+      ms-registry:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8183/actuator/health | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
     networks:
       microservices-network:
 
@@ -65,10 +119,22 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       PGUSER: ${POSTGRES_USER}
     healthcheck:
-      test: pg_isready
+      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB" ]
       interval: 1s
       start_period: 2s
       retries: 3
+    networks:
+      microservices-network:
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    hostname: redis
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
     networks:
       microservices-network:
 

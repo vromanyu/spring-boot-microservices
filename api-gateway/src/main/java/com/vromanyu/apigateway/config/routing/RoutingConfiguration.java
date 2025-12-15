@@ -1,5 +1,7 @@
-package com.vromanyu.apigateway.config;
+package com.vromanyu.apigateway.config.routing;
 
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +15,7 @@ public class RoutingConfiguration {
 
 
     @Bean
-    public RouteLocator routeLocator(RouteLocatorBuilder builder) {
+    public RouteLocator routeLocator(RouteLocatorBuilder builder, RedisRateLimiter redisRateLimiter, KeyResolver keyResolver) {
         return builder.routes()
                 .route(p -> p.path("/api-gateway/employees/info")
                         .filters(f -> f.rewritePath("/api-gateway/employees/info", "/actuator/info"))
@@ -30,6 +32,10 @@ public class RoutingConfiguration {
                                 config.setName("GATEWAY-EMPLOYEE-CIRCUIT-BREAKER");
                                 config.setFallbackUri("/unavailable");
                             });
+                            f.requestRateLimiter(config -> {
+                                config.setRateLimiter(redisRateLimiter);
+                                config.setKeyResolver(keyResolver);
+                            });
                             return f;
                         })
                         .uri("lb://EMPLOYEE-MS"))
@@ -42,6 +48,10 @@ public class RoutingConfiguration {
                                 config.setRetries(3);
                                 config.setMethods(HttpMethod.GET);
                                 config.setBackoff(Duration.ofMillis(100), Duration.ofMillis(1000), 2, true);
+                            });
+                            f.requestRateLimiter(config -> {
+                                config.setRateLimiter(redisRateLimiter);
+                                config.setKeyResolver(keyResolver);
                             });
                             return f;
                         })

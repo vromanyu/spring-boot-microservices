@@ -1,0 +1,29 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: "api-gateway"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["api-gateway:8585"]
+
+  - job_name: "config-server"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["config-server:8888"]
+
+  - job_name: "ms-registry"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["ms-registry:8761"]
+
+  - job_name: "department-ms"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["department-ms:8182"]
+
+  - job_name: "employee-ms"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["employee-ms:8183"]

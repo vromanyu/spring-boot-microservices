@@ -13,7 +13,7 @@ services:
       retries: 5
       start_period: 5s
     networks:
-      microservices-network:
+      - microservices-network
 
   ms-registry:
     image: vromanyu/ms-registry:jdk-25
@@ -33,7 +33,7 @@ services:
       retries: 5
       start_period: 5s
     networks:
-      microservices-network:
+      - microservices-network
 
   api-gateway:
     image: vromanyu/api-gateway:jdk-25
@@ -57,7 +57,7 @@ services:
       retries: 5
       start_period: 5s
     networks:
-      microservices-network:
+      - microservices-network
 
   department-ms:
     image: vromanyu/department-ms:jdk-25
@@ -82,7 +82,7 @@ services:
       retries: 5
       start_period: 5s
     networks:
-      microservices-network:
+      - microservices-network
 
   employee-ms:
     image: vromanyu/employee-ms:jdk-25
@@ -107,7 +107,7 @@ services:
       retries: 5
       start_period: 5s
     networks:
-      microservices-network:
+      - microservices-network
 
   postgresql:
     image: postgres:latest
@@ -124,7 +124,7 @@ services:
       start_period: 2s
       retries: 3
     networks:
-      microservices-network:
+      - microservices-network
 
   redis:
     image: redis:latest
@@ -136,7 +136,59 @@ services:
       timeout: 3s
       retries: 5
     networks:
-      microservices-network:
+      - microservices-network
+
+  loki:
+    image: grafana/loki:3.4.1
+    container_name: loki
+    hostname: loki
+    volumes:
+      - ./loki:/mnt/config
+    ports:
+      - "3100:3100"
+    command:
+      - "-config.file=/mnt/config/loki-config.yaml"
+    networks:
+      - microservices-network
+
+  promtail:
+    image: grafana/promtail:3.4.1
+    container_name: promtail
+    hostname: promtail
+    volumes:
+      - ./promtail:/mnt/config
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - "-config.file=/mnt/config/promtail-config.yaml"
+    depends_on:
+      - loki
+    networks:
+      - microservices-network
+
+  alloy:
+    image: grafana/alloy:latest
+    container_name: alloy
+    hostname: alloy
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+      - /etc/alloy/config.alloy
+    ports:
+      - "12345:12345"
+    volumes:
+      - ./alloy/config.alloy:/etc/alloy/config.alloy
+    networks:
+      - microservices-network
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - microservices-network
 
 networks:
   microservices-network:

@@ -35,8 +35,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private boolean isValidDepartment(EmployeeRequestDto employeeRequestDto) {
-        logger.info("{} isValidDepartment({}), calling department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), employeeRequestDto, employeeRequestDto.departmentId());
+        logger.info("{} isValidDepartment({}), start department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), employeeRequestDto, employeeRequestDto.departmentId());
         DepartmentDto departmentDto = departmentMsClient.getById(employeeRequestDto.departmentId());
+        logger.info("{} isValidDepartment({}), finish department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), employeeRequestDto, employeeRequestDto.departmentId());
         return departmentDto != null;
     }
 
@@ -46,8 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("employee with id " + id + " not found"));
 
-        logger.info("{} getById({}), calling department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), id, employee.getDepartmentId());
+        logger.info("{} getById({}), start department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), id, employee.getDepartmentId());
         DepartmentDto departmentDto = departmentMsClient.getById(employee.getDepartmentId());
+        logger.info("{} getById({}), finish department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), id, employee.getDepartmentId());
         EmployeeResponseDto employeeResponseDto = EmployeeMapper.toEmployeeResponseDto(employee);
         return new EmployeeResponseWithDepartmentDto(employeeResponseDto, departmentDto);
     }

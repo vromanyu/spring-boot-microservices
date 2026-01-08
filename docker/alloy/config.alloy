@@ -27,10 +27,3 @@ loki.source.docker "default" {
   targets = discovery.relabel.logs_docker.output
   forward_to = [loki.write.default.receiver]
 }
-
-loki.source.file "system_logs" {
-      targets = [
-        {__path__ = "/var/log/*log"},
-      ]
-      forward_to = [loki.write.default.receiver]
-}

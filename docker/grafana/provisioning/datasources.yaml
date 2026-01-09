@@ -19,3 +19,10 @@ datasources:
     uid: prometheusdatasource
     jsonData:
       timeout: 60
+
+  - name: Tempo
+    type: tempo
+    access: proxy
+    url: http://tempo:3200
+    jsonData:
+      timeout: 60

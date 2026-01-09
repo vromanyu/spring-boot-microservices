@@ -9,6 +9,8 @@ import com.vromanyu.employeems.mapper.EmployeeMapper;
 import com.vromanyu.employeems.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final DepartmentMsClient departmentMsClient;
+    private static final Logger logger =  LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
     @Override
     public EmployeeResponseDto save(EmployeeRequestDto employeeRequestDto) {
@@ -32,7 +35,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private boolean isValidDepartment(EmployeeRequestDto employeeRequestDto) {
+        logger.info("{} isValidDepartment({}), start department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), employeeRequestDto, employeeRequestDto.departmentId());
         DepartmentDto departmentDto = departmentMsClient.getById(employeeRequestDto.departmentId());
+        logger.info("{} isValidDepartment({}), finish department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), employeeRequestDto, employeeRequestDto.departmentId());
         return departmentDto != null;
     }
 
@@ -42,7 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("employee with id " + id + " not found"));
 
+        logger.info("{} getById({}), start department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), id, employee.getDepartmentId());
         DepartmentDto departmentDto = departmentMsClient.getById(employee.getDepartmentId());
+        logger.info("{} getById({}), finish department-ms/departmentMsClients.getById({})", this.getClass().getSimpleName(), id, employee.getDepartmentId());
         EmployeeResponseDto employeeResponseDto = EmployeeMapper.toEmployeeResponseDto(employee);
         return new EmployeeResponseWithDepartmentDto(employeeResponseDto, departmentDto);
     }

@@ -11,11 +11,25 @@ datasources:
     jsonData:
       timeout: 60
       maxLines: 2000
+      derivedFields:
+        - datasourceUid: tempodatasource
+          name: traceID
+          type: label
+          matcherRegex: "\\[[^,]+,([^,]+),"
+          url: '$${__value.raw}'
 
   - name: Prometheus
     type: prometheus
     access: proxy
     url: http://prometheus:9090
     uid: prometheusdatasource
+    jsonData:
+      timeout: 60
+
+  - name: Tempo
+    type: tempo
+    access: proxy
+    url: http://tempo:3200
+    uid: tempodatasource
     jsonData:
       timeout: 60

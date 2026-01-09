@@ -1,15 +1,38 @@
 # Spring Boot Microservices
 
-[![springboot-restful-webservices](https://github.com/vromanyu/spring-boot-microservices/actions/workflows/springboot-restful-webservices.yml/badge.svg)](https://github.com/vromanyu/spring-boot-microservices/actions/workflows/springboot-restful-webservices.yml)
+[![build-all-workflow](https://github.com/vromanyu/spring-boot-microservices/actions/workflows/build-all-workflow.yml/badge.svg?branch=main)](https://github.com/vromanyu/spring-boot-microservices/actions/workflows/build-all-workflow.yml)
 
+This repository is a learning playground for building **Spring Boot–based microservices**. It demonstrates a small but realistic microservice ecosystem including centralized configuration, service discovery, API gateway routing, and a full observability stack. The project also showcases CI with GitHub Actions and automated Docker image builds and pushes via a Maven plugin. A `docker-compose` file is included to run the services locally.
 
-This repository is a learning playground for building microservices with Spring Boot. It demonstrates a small microservice cluster, CI with GitHub Actions, and automated Docker image builds and pushes via a Maven plugin. A docker-compose file is included to run the services locally as a cluster.
+## Architecture Overview
+
+The system is composed of:
+- Multiple Spring Boot microservices
+- Spring Cloud components for configuration, routing, and service discovery
+- A complete observability stack for metrics, logs, and traces
+- Containerized deployment using Docker and Docker Compose
 
 ## Features
+
+### Microservices & Spring Cloud
 - Small collection of Spring Boot microservices (for learning and experimentation)
-- Continuous Integration pipelines using GitHub Actions
-- Docker images built & pushed using a Maven plugin configured in the project
-- docker-compose file to run the microservice cluster locally
+- **Spring Cloud Config Server** for centralized external configuration
+- **Eureka Server** for service discovery and registry
+- **Spring Cloud Gateway** as the API gateway and single entry point
+
+### Observability
+- **OpenTelemetry** for distributed tracing
+- **Micrometer** for application metrics
+- **Prometheus** for metrics scraping and storage
+- **Loki** for centralized log aggregation
+- **Tempo** for distributed trace storage
+- **Grafana** for metrics, logs, and trace visualization
+- **Grafana Alloy** for telemetry collection and forwarding
+
+### DevOps & Tooling
+- Continuous Integration pipelines using **GitHub Actions**
+- Docker images built & pushed using a **Maven plugin**
+- `docker-compose` setup to run the entire microservice and observability stack locally
 
 ## Prerequisites
 - Java (CI uses 21, 25)
@@ -27,9 +50,6 @@ This repository is a learning playground for building microservices with Spring 
    - docker-compose up --build
    - To run in the background: docker-compose up -d
    - To stop and remove containers: docker-compose down
-
-## Continuous Integration
-CI pipelines are provided as GitHub Actions workflows (see `.github/workflows/`). The workflows build the projects and produce Docker images according to the repository configuration.
 
 ## Contributing
 Feel free to open issues or pull requests if you want to suggest improvements or add examples.

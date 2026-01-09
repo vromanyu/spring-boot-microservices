@@ -26,3 +26,10 @@ datasources:
     url: http://tempo:3110
     jsonData:
       timeout: 60
+
+  - name: Tempo
+    type: tempo
+    access: proxy
+    url: http://tempo:3110
+    jsonData:
+      timeout: 60

@@ -1,5 +1,7 @@
 # Spring Boot Microservices
 
+[![build-all-workflow](https://github.com/vromanyu/spring-boot-microservices/actions/workflows/build-all-workflow.yml/badge.svg?branch=main)](https://github.com/vromanyu/spring-boot-microservices/actions/workflows/build-all-workflow.yml)
+
 This repository is a learning playground for building **Spring Boot–based microservices**. It demonstrates a small but realistic microservice ecosystem including centralized configuration, service discovery, API gateway routing, and a full observability stack. The project also showcases CI with GitHub Actions and automated Docker image builds and pushes via a Maven plugin. A `docker-compose` file is included to run the services locally.
 
 ## Architecture Overview

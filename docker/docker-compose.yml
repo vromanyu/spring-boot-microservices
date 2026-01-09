@@ -13,9 +13,10 @@ services:
       retries: 5
       start_period: 5s
     environment:
-      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemtry-javaagent-2.23.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemetry-javaagent-2.23.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
       OTEL_METRICS_EXPORTER: none
+      OTEL_LOGS_EXPORTER: none
       OTEL_SERVICE_NAME: config-server
     networks:
       - microservices-network
@@ -28,9 +29,10 @@ services:
       - "8761:8761"
     environment:
       CONFIG_SERVER: "config-server"
-      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemtry-javaagent-2.23.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemetry-javaagent-2.23.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
       OTEL_METRICS_EXPORTER: none
+      OTEL_LOGS_EXPORTER: none
       OTEL_SERVICE_NAME: ms-registry
     depends_on:
       config-server:
@@ -52,9 +54,10 @@ services:
       CONFIG_SERVER: "config-server"
       MS_REGISTRY: "ms-registry"
       REDIS_HOST: "redis"
-      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemtry-javaagent-2.23.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemetry-javaagent-2.23.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
       OTEL_METRICS_EXPORTER: none
+      OTEL_LOGS_EXPORTER: none
       OTEL_SERVICE_NAME: api-gateway
     ports:
       - "8585:8585"
@@ -83,9 +86,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOSTNAME: "postgres"
-      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemtry-javaagent-2.23.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemetry-javaagent-2.23.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
       OTEL_METRICS_EXPORTER: none
+      OTEL_LOGS_EXPORTER: none
       OTEL_SERVICE_NAME: department-ms
     depends_on:
       ms-registry:
@@ -112,9 +116,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOSTNAME: "postgres"
-      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemtry-javaagent-2.23.0.jar"
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4317
+      JAVA_TOOL_OPTIONS: "-javaagent:/workspace/BOOT-INF/lib/opentelemetry-javaagent-2.23.0.jar"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
       OTEL_METRICS_EXPORTER: none
+      OTEL_LOGS_EXPORTER: none
       OTEL_SERVICE_NAME: employee-ms
     depends_on:
       ms-registry:
@@ -179,10 +184,12 @@ services:
     container_name: tempo
     hostname: tempo
     ports:
-      - "3110:3100"
+      - "3110:3200"
+      - "4318:4318"
       - "4317:4317"
+    command: ["-config.file=/etc/tempo/tempo.yml"]
     volumes:
-      - ./tempo/tempo.yml:/etc/tempo-config.yml
+      - ./tempo/tempo.yml:/etc/tempo/tempo.yml
     networks:
       - microservices-network
 

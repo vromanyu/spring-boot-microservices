@@ -1,17 +1,32 @@
 server:
-  http_listen_port: 3100
+  http_listen_port: 3200
 
 distributor:
   receivers:
     otlp:
       protocols:
-        grpc:
         http:
+          endpoint: 0.0.0.0:4318
+        grpc:
+          endpoint: 0.0.0.0:4317
 
 ingester:
+  lifecycler:
+    ring:
+      kvstore:
+          store: inmemory
+      replication_factor: 1
   trace_idle_period: 10s
-  max_block_bytes: 1_000_000
-  max_block_duration: 5m
+
+metrics_generator:
+  ring:
+    kvstore:
+      store: inmemory
+  processor:
+    span_metrics:
+    service_graphs:
+  storage:
+    path: /tmp/tempo/metrics
 
 compactor:
   compaction:

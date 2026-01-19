@@ -31,6 +31,14 @@ jobs:
         image: redis:latest
         ports:
           - "6379:6379"
+      keycloak:
+        image: quay.io/keycloak/keycloak:26.5.0
+        ports:
+          - "7080:8080"
+        env:
+          KC_BOOTSTRAP_ADMIN_USERNAME: ${{secrets.KC_BOOTSTRAP_ADMIN_USERNAME}}
+          KC_BOOTSTRAP_ADMIN_PASSWORD: ${{secrets.KC_BOOTSTRAP_ADMIN_PASSWORD}}
+          SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://localhost:7080/realms/master/protocol/openid-connect/certs
 
     env:
       POSTGRES_USER: ${{secrets.POSTGRES_USER}}

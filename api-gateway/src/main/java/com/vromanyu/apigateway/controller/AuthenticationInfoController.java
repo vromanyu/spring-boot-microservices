@@ -15,9 +15,7 @@ public class AuthenticationInfoController {
 
     @GetMapping("/auth-info")
     public Mono<Void> authenticationInformation(@AuthenticationPrincipal JwtAuthenticationToken jwtAuthenticationToken) {
-        jwtAuthenticationToken.getAuthorities().forEach(authority -> {
-            logger.info("Authority: {}", authority);
-        });
+        jwtAuthenticationToken.getAuthorities().forEach(authority -> logger.info("Authority: {}", authority));
         return Mono.empty();
     }
 }

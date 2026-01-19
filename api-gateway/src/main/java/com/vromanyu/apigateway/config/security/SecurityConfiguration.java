@@ -24,9 +24,7 @@ public class SecurityConfiguration {
             exchange.pathMatchers("/actuator/info").permitAll();
             exchange.anyExchange().authenticated();
         });
-        http.oauth2ResourceServer(oauth2 -> {
-            oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(grantedAuthoritiesConverter()));
-        });
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(grantedAuthoritiesConverter())));
         return http.build();
     }
 

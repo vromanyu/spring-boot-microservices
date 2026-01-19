@@ -38,7 +38,6 @@ jobs:
         env:
           KC_BOOTSTRAP_ADMIN_USERNAME: ${{secrets.KC_BOOTSTRAP_ADMIN_USERNAME}}
           KC_BOOTSTRAP_ADMIN_PASSWORD: ${{secrets.KC_BOOTSTRAP_ADMIN_PASSWORD}}
-          SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://localhost:7080/realms/master/protocol/openid-connect/certs
 
     env:
       POSTGRES_USER: ${{secrets.POSTGRES_USER}}
@@ -46,6 +45,7 @@ jobs:
       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
       DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://localhost:7080/realms/master/protocol/openid-connect/certs
     steps:
       - name: Clone
         uses: actions/checkout@v5

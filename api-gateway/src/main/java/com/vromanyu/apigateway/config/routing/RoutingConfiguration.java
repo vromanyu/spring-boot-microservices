@@ -17,6 +17,9 @@ public class RoutingConfiguration {
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder, RedisRateLimiter redisRateLimiter, KeyResolver keyResolver) {
         return builder.routes()
+                .route(p -> p.path("/api-gateway/auth-info")
+                        .filters(f -> f.rewritePath("/api-gateway/auth-info","/auth-info"))
+                        .uri("lb://API-GATEWAY"))
                 .route(p -> p.path("/api-gateway/employees/info")
                         .filters(f -> f.rewritePath("/api-gateway/employees/info", "/actuator/info"))
                         .uri("lb://EMPLOYEE-MS"))

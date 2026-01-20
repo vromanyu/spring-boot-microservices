@@ -57,7 +57,7 @@ public class MessageMsApplication {
         props.put("mail.smtp.starttls.enable", "true");
 
         return mailSender;
-    };
+    }
 
     @Bean
     public Function<EmployeeCreationMessage, EmployeeCreationMessage> log() {
@@ -74,7 +74,8 @@ public class MessageMsApplication {
                 MimeMessage mimeMessage = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
                 Context context = new Context();
-                context.setVariable("employeeName", message.firstName() + " " + message.lastName());
+                context.setVariable("employeeFirstName", message.firstName());
+                context.setVariable("employeeLastName", message.lastName());
                 context.setVariable("employeeEmail", message.email());
                 context.setVariable("uuid", message.uuid());
                 String email = templateEngine.process("email", context);
@@ -88,5 +89,5 @@ public class MessageMsApplication {
             }
 
         };
-    };
+    }
 }

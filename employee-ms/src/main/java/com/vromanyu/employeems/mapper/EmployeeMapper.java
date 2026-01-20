@@ -14,6 +14,7 @@ public class EmployeeMapper {
         employee.setLastName(employeeRequestDto.lastName());
         employee.setEmail(employeeRequestDto.email());
         employee.setDepartmentId(employeeRequestDto.departmentId());
+        employee.setEmailVerified(false);
         return employee;
     }
 
@@ -21,7 +22,8 @@ public class EmployeeMapper {
         return new EmployeeResponseDto(employee.getId(),
                 employee.getFirstName(),
                 employee.getLastName(),
-                employee.getEmail());
+                employee.getEmail(),
+                employee.getEmailVerified());
     }
 
 }

@@ -33,6 +33,8 @@ public class Employee {
     @Column(nullable = false)
     private Integer departmentId;
 
+    private Boolean emailVerified;
+
     @CreationTimestamp
     private LocalDateTime creationDate;
 

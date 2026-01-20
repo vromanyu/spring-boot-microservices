@@ -19,6 +19,7 @@ The system is composed of:
 - **Spring Cloud Config Server** for centralized external configuration
 - **Eureka Server** for service discovery and registry
 - **Spring Cloud Gateway** as the API gateway and single entry point
+- **Keycloak** for centralized authentication and authorization on the Edge server
 
 ### Observability
 - **OpenTelemetry** for distributed tracing

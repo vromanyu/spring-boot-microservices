@@ -41,7 +41,6 @@ jobs:
       POSTGRES_DB: ${{secrets.POSTGRES_DB}}
       DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      CONFIG_SERVER: "config-server"
     steps:
       - name: Clone
         uses: actions/checkout@v5

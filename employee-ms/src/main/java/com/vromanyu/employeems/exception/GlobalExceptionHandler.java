@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmailAlreadyVerifiedException.class)
-    public String handleEmailAlreadyVerifiedException(EmailAlreadyVerifiedException e, HttpServletRequest request) {
+    public String handleEmailAlreadyVerifiedException() {
         return "Email already verified!";
     }
 

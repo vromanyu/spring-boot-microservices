@@ -10,4 +10,5 @@ public interface EmployeeService {
     EmployeeResponseDto save(EmployeeRequestDto employeeRequestDto);
     EmployeeResponseWithDepartmentDto getById(Integer id);
     List<EmployeeResponseDto> getAll();
+    void verifyEmail(String uuid);
 }

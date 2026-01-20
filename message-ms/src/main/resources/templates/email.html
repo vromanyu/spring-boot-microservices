@@ -12,7 +12,7 @@
     </div>
     <h3>Hello, <span th:text="${employeeName}"></span></h3>
     <span>Please Verify your email at the following link:
-            <a th:href="@{http://localhost:8787/api-gateway/employees/verify-email/${uuid}}"
+            <a th:href="@{http://localhost:8585/api-gateway/employees/verify-email(uuid=${uuid})}"
                th:text="'/api-gateway/employees/verify-email/' + ${uuid}"></a>
     </span>
 </div>

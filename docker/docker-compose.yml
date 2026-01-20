@@ -257,8 +257,11 @@ services:
       - KC_DB_PASSWORD=${KC_DB_PASSWORD}
     env_file:
       - .env
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
     command:
       - start-dev
+      - --import-realm
     depends_on:
       keycloak-db:
         condition: service_healthy

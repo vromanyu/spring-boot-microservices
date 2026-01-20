@@ -1,0 +1,47 @@
+name: message-ms-workflow
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - message-ms/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - message-ms/**
+  workflow_dispatch:
+
+jobs:
+  message-ms-ci:
+    strategy:
+      matrix:
+        java-version: [ 21, 25 ]
+    runs-on: ubuntu-latest
+    services:
+      config-server:
+        image: vromanyu/config-server:jdk-25
+        ports:
+          - "8888:8888"
+    env:
+      DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+      DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+    steps:
+      - name: Clone
+        uses: actions/checkout@v5
+      - name: JDK Setup
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{matrix.java-version}}
+          distribution: 'temurin'
+          architecture: x64
+          cache: 'maven'
+      - name: Build/Test
+        id: build
+        run: mvn -B package --file ./message-ms/pom.xml -Djava.version=${{matrix.java-version}}
+      - name: Upload Artifact
+        if: success() && steps.build.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{matrix.java-version}}
+          path: ./message-ms/target/*.jar

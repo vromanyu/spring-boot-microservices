@@ -1,0 +1,20 @@
+{
+  "realm": "spring-boot-microservices",
+  "enabled": true,
+
+  "clients": [
+    {
+      "clientId": "spring-boot-microservices-client",
+      "name": "Spring Boot Microservices client",
+      "enabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "clientAuthenticatorType": "client-secret",
+      "secret": "spring-boot-microservices-secret",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    }
+  ]
+}

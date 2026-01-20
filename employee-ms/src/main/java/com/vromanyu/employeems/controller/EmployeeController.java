@@ -47,4 +47,10 @@ public class EmployeeController {
         return ResponseEntity.ok(savedEmployees);
     }
 
+    @GetMapping(value = "/verify-email", produces = "text/plain", params = {"uuid"})
+    public String verifyEmail(@RequestParam String uuid) {
+        employeeService.verifyEmail(uuid);
+        return "Email verified!";
+    }
+
 }

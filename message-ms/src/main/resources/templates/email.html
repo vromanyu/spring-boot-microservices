@@ -1,0 +1,18 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:remove="all">Email Template</title>
+</head>
+<body>
+<div>
+    <div class="logo">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1RNgloYivDxu-m0uthmQb78H2ULQhv94GZw&s"
+             alt="spring-boot-logo" height="200" width="200"/>
+    </div>
+    <h3>Hello, <span th:text="${#strings.capitalize(employeeFirstName)} + ' ' + ${#strings.capitalize(employeeLastName)}"></span></h3>
+    <span><a th:href="@{http://localhost:8585/api-gateway/employees/verify-email(uuid=${uuid})}">Click here</a> to verify email
+    </span>
+</div>
+</body>
+</html>

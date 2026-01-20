@@ -40,4 +40,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(internalErrorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(EmailAlreadyVerifiedException.class)
+    public String handleEmailAlreadyVerifiedException() {
+        return "Email already verified!";
+    }
+
 }

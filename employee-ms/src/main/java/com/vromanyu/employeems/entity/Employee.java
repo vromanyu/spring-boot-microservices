@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -42,4 +43,9 @@ public class Employee {
     private LocalDateTime updateDate;
 
     private String uuid;
+
+    @PrePersist
+    public void generateUuid() {
+        this.uuid = UUID.randomUUID().toString();
+    }
 }

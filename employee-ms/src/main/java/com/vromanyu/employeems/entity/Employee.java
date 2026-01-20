@@ -40,4 +40,6 @@ public class Employee {
 
     @UpdateTimestamp
     private LocalDateTime updateDate;
+
+    private String uuid;
 }

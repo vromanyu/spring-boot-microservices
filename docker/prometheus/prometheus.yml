@@ -27,3 +27,8 @@ scrape_configs:
     metrics_path: "/actuator/prometheus"
     static_configs:
       - targets: ["employee-ms:8183"]
+
+  - job_name: "message-ms"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["message-ms:9010"]

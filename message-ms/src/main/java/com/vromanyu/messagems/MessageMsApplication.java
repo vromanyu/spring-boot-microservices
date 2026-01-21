@@ -62,7 +62,7 @@ public class MessageMsApplication {
     @Bean
     public Function<EmployeeCreationMessage, EmployeeCreationMessage> log() {
         return message -> {
-            logger.info("{} - Received: {}", "consume()", message);
+            logger.info("{} (log) message: {}", this.getClass().getSimpleName(), message);
             return message;
         };
     }
@@ -71,6 +71,7 @@ public class MessageMsApplication {
     public Consumer<EmployeeCreationMessage> AndEmail(JavaMailSender mailSender, TemplateEngine templateEngine) {
         return message -> {
             try {
+                logger.info("{} (AndEmail-preparing) message: {}", this.getClass().getSimpleName(), message);
                 MimeMessage mimeMessage = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
                 Context context = new Context();
@@ -84,7 +85,9 @@ public class MessageMsApplication {
                 helper.setTo(message.email());
                 helper.setText(email, true);
                 mailSender.send(mimeMessage);
+                logger.info("{} (AndEmail-email-sent) message: {}", this.getClass().getSimpleName(), message);
             } catch (MessagingException e) {
+                logger.error("{} (AndEmail) message: {}\nexception: {}", this.getClass().getSimpleName(), message, e.getMessage());
                 throw new RuntimeException(e);
             }
 
